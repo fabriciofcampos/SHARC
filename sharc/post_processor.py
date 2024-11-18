@@ -1,4 +1,6 @@
 from sharc.results import Results
+from sharc.antenna.antenna import Antenna
+import types
 
 from dataclasses import dataclass, field
 import plotly.graph_objects as go
@@ -178,7 +180,7 @@ class PostProcessor:
             "title": "[SYS] IMT to system path loss",
         },
         "system_dl_interf_power": {
-            "x_label": "Interference Power [dBm/MHz]",
+            "x_label": "Interference Power [dBm/BMHz]",
             "title": "[SYS] system interference power from IMT DL",
         },
         "imt_system_diffraction_loss": {
@@ -211,7 +213,15 @@ class PostProcessor:
         },
         "system_ul_interf_power": {
             "title": "[SYS] system interference power from IMT UL",
-            "x_label": "Interference Power [dBm]",
+            "x_label": "Interference Power [dBm/BMHz]",
+        },
+        "system_ul_interf_power_per_mhz": {
+            "title": "[SYS] system interference power per MHz from IMT UL",
+            "x_label": "Interference Power [dBm/MHz]",
+        },
+        "system_dl_interf_power_per_mhz": {
+            "title": "[SYS] system interference power per MHz from IMT DL",
+            "x_label": "Interference Power [dBm/MHz]",
         },
         "system_inr": {
             "title": "[SYS] system INR",
@@ -247,19 +257,22 @@ class PostProcessor:
 
         return self
 
+    def get_results_possible_legends(self, result: Results) -> list[dict]:
+        return list(
+            filter(
+                lambda pl: pl["dir_name_contains"]
+                in os.path.basename(result.output_directory),
+                self.plot_legend_patterns,
+            )
+        )
+    
     def generate_cdf_plots_from_results(
         self, results: list[Results], *, n_bins=200
     ) -> list[go.Figure]:
         figs: dict[str, list[go.Figure]] = {}
 
         for res in results:
-            possible_legends_mapping = list(
-                filter(
-                    lambda pl: pl["dir_name_contains"]
-                    in os.path.basename(res.output_directory),
-                    self.plot_legend_patterns,
-                )
-            )
+            possible_legends_mapping = self.get_results_possible_legends(res)
 
             if len(possible_legends_mapping):
                 legend = possible_legends_mapping[0]["legend"]
@@ -454,3 +467,27 @@ class PostProcessor:
     @staticmethod
     def generate_sample_statistics(fieldname: str, sample: list[float]) -> ResultsStatistics:
         return FieldStatistics().load_from_sample(fieldname, sample)
+
+    @staticmethod
+    def generate_antenna_radiation_pattern_plot(antenna: Antenna, title: str) -> go.Figure:
+        phi = np.linspace(0.1, 100, num=100000)
+        fig = go.Figure()
+        gain = antenna.calculate_gain(off_axis_angle_vec=phi)
+        fig.update_layout(
+            title=title,
+            xaxis_title=r"Off-axis angle &#934; [deg]",
+            yaxis_title="Gain [dBi]",
+            yaxis=dict(tickmode="linear", dtick=5),
+            xaxis=dict(type="log"),
+            legend_title="Labels",
+        )
+
+        fig.add_trace(
+            go.Scatter(
+                x=phi,
+                y=gain,
+                mode="lines",
+            ),
+        )
+
+        return fig
