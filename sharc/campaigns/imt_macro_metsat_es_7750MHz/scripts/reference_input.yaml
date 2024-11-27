@@ -334,7 +334,7 @@ generic: &generic
       # Type of elevation. May be "UNIFORM_DIST", "FIXED"
       type: FIXED
       # Value of elevation when type == "FIXED" [deg]
-      fixed: 3
+      fixed: 5
       # Limits of random uniform distribution when type == "UNIFORM_DIST"
       uniform_dist:
         # uniform distribution lower bound [deg]
@@ -362,49 +362,49 @@ generic: &generic
 
 ################## NEW TYPE
 # - 7.750MHz - 7.900MHz (s-to-E)
-sat_jpss_2: &sat_jpss_2
-  <<: *generic
-  # Sensor center frequency [MHz]
-  frequency: 7812
-  # Sensor bandwidth [MHz]
-  bandwidth: 30
-  # System receive noise temperature [K]
-  noise_temperature: 343
-  antenna:
-    pattern: ITU-R S.465
-    # Earth station peak receive antenna gain [dBi]
-    gain: 44.9
-    itu_r_s_465:
-      # Antenna diameter [m]
-      # Since we were given the beamwidth,
-      # we need to consider get AntennaS465.phi_min == 0.8/2 deg
-      diameter: 0.83
-  # Sensor bandwidth [MHz]
-  bandwidth: 50
-
-# # too similar results
-# sat_jpss_1:
-#   # The only thing that changes between both stations
-#   <<: *sat_jpss_2
+# sat_jpss_2: &sat_jpss_2
+#   <<: *generic
+#   # Sensor center frequency [MHz]
+#   frequency: 7812
 #   # Sensor bandwidth [MHz]
 #   bandwidth: 30
+#   # System receive noise temperature [K]
+#   noise_temperature: 343
+#   antenna:
+#     pattern: ITU-R S.465
+#     # Earth station peak receive antenna gain [dBi]
+#     gain: 44.9
+#     itu_r_s_465:
+#       # Antenna diameter [m]
+#       # Since we were given the beamwidth,
+#       # we need to consider get AntennaS465.phi_min == 0.8/2 deg
+#       diameter: 0.83
+#   # Sensor bandwidth [MHz]
+#   bandwidth: 50
+
+# # # too similar results
+# # sat_jpss_1:
+# #   # The only thing that changes between both stations
+# #   <<: *sat_jpss_2
+# #   # Sensor bandwidth [MHz]
+# #   bandwidth: 30
 
 
-non_gso_sat_F:
-  <<: *generic
-  # Sensor center frequency [MHz]
-  frequency: 7800
-  # Sensor bandwidth [MHz]
-  bandwidth: 63
-  # System receive noise temperature [K]
-  noise_temperature: 180
-  antenna:
-    pattern: ITU-R S.465
-    # Earth station peak receive antenna gain [dBi]
-    gain: 55
-    itu_r_s_465:
-      # Antenna diameter [m]
-      diameter: 10
+# # non_gso_sat_F:
+# #   <<: *generic
+# #   # Sensor center frequency [MHz]
+# #   frequency: 7800
+# #   # Sensor bandwidth [MHz]
+# #   bandwidth: 63
+# #   # System receive noise temperature [K]
+# #   noise_temperature: 180
+# #   antenna:
+# #     pattern: ITU-R S.465
+# #     # Earth station peak receive antenna gain [dBi]
+# #     gain: 55
+# #     itu_r_s_465:
+# #       # Antenna diameter [m]
+# #       diameter: 10
 
 non_gso_sat_E_and_G_7780: &non_gso_sat_E_and_G_7780
   <<: *generic
@@ -461,18 +461,18 @@ non_gso_sat_C_and_S:
 #       # Antenna diameter [m]
 #       diameter: 3
 
-non_gso_sat_BF:
-  <<: *generic
-  # Sensor center frequency [MHz]
-  frequency: 7865
-  # Sensor bandwidth [MHz]
-  bandwidth: 61.4
-  # System receive noise temperature [K]
-  noise_temperature: 150
-  antenna:
-    pattern: ITU-R S.580
-    # Earth station peak receive antenna gain [dBi]
-    gain: 50
-    itu_r_s_580:
-      # Antenna diameter [m]
-      diameter: 5
+# non_gso_sat_BF:
+#   <<: *generic
+#   # Sensor center frequency [MHz]
+#   frequency: 7865
+#   # Sensor bandwidth [MHz]
+#   bandwidth: 61.4
+#   # System receive noise temperature [K]
+#   noise_temperature: 150
+#   antenna:
+#     pattern: ITU-R S.580
+#     # Earth station peak receive antenna gain [dBi]
+#     gain: 50
+#     itu_r_s_580:
+#       # Antenna diameter [m]
+#       diameter: 5

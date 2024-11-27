@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from sharc.results import Results
 from sharc.post_processor import PostProcessor
-import plotly.graph_objects as go
+# import plotly.graph_objects as go
 from sharc.parameters.parameters import Parameters
 
 import glob
@@ -11,7 +11,7 @@ from sharc.antenna.antenna_s580 import AntennaS580
 from sharc.antenna.antenna_beamforming_imt import AntennaBeamformingImt, PlotAntennaPattern
 
 campaign_base_dir = str((Path(__file__) / ".." / "..").resolve())
-dl_dir = os.path.join(campaign_base_dir, "output_dl_16x8")
+dl_dir = os.path.join(campaign_base_dir, "output_dl_16x8-last")
 
 post_processor = PostProcessor()
 
@@ -148,8 +148,11 @@ attributes_to_plot = [
     "system_ul_interf_power_per_mhz",
 ]
 
-dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot)
-ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot)
+def filter_fn(x:str):
+    return "15000" in x and ("E_and_G" in x or "C_and_S" in x)
+
+dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
+ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
 # ^: typing.List[Results]
 
 all_results = [*dl_results, *ul_results]
@@ -250,7 +253,7 @@ i = 0
 antenna_bs = None
 antenna_ue = None
 for result in all_results:
-    if "_5000m_" not in result.output_directory:
+    if "_15000m_" not in result.output_directory:
         continue
 
     params_file = glob.glob(result.output_directory + "/*.yaml")[0]
@@ -266,7 +269,7 @@ for result in all_results:
         antenna = AntennaS580(params.single_earth_station.antenna.itu_r_s_580)
     PostProcessor.generate_antenna_radiation_pattern_plot(
         antenna, legend["legend"]
-    ).show()
+    )[0].show()
     if i == 0:
         antenna_bs = AntennaBeamformingImt(
             params.imt.bs.antenna.get_antenna_parameters(),

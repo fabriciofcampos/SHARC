@@ -356,25 +356,24 @@ generic: &generic
 # - 7.450MHz - 7.550MHz (s-to-E)
 
 # ITU-R SA.2488 Table 19
-# TODO: Get some antenna diameter
-es_gso_sat_Q_7475MHz: &es_gso_sat_Q_7475MHz
-  <<: *generic
-  # Sensor center frequency [MHz]
-  frequency: 7475
-  # Sensor bandwidth [MHz]
-  # NOTE: it can be verified that for all active satellites in
-  # https://space.oscar.wmo.int/satellites/view/electro_goms
-  # the bandwidth is 73000 kHz
-  bandwidth: 73
-  # System receive noise temperature [K]
-  noise_temperature: 150
-  antenna:
-    pattern: ITU-R S.465
-    # Earth station peak receive antenna gain [dBi]
-    gain: 50
-    itu_r_s_465:
-      # Antenna diameter [m]
-      diameter: 5
+# es_gso_sat_Q_7475MHz: &es_gso_sat_Q_7475MHz
+#   <<: *generic
+#   # Sensor center frequency [MHz]
+#   frequency: 7475
+#   # Sensor bandwidth [MHz]
+#   # NOTE: it can be verified that for all active satellites in
+#   # https://space.oscar.wmo.int/satellites/view/electro_goms
+#   # the bandwidth is 73000 kHz
+#   bandwidth: 73
+#   # System receive noise temperature [K]
+#   noise_temperature: 150
+#   antenna:
+#     pattern: ITU-R S.465
+#     # Earth station peak receive antenna gain [dBi]
+#     gain: 50
+#     itu_r_s_465:
+#       # Antenna diameter [m]
+#       diameter: 5
 
 # # Almost the same as the previous ES, so no value:
 # es_gso_sat_Q_7500MHz:
@@ -383,20 +382,20 @@ es_gso_sat_Q_7475MHz: &es_gso_sat_Q_7475MHz
 #   frequency: 7500
 
 # TODO:
-# es_gso_sat_P:
-#   <<: *generic
-#   # Sensor center frequency [MHz]
-#   frequency: 7500
-#   # Sensor bandwidth [MHz]
-#   # NOTE: We weren't given the bandwidth 
-#   bandwidth: 30
-#   # System receive noise temperature [K]
-#   noise_temperature: 270
-#   antenna:
-#     pattern: a
-#     # Earth station peak receive antenna gain [dBi]
-#     gain: 59
-#     itu_r_s_465:
-#       # Antenna diameter [m]
-#       diameter: 13
+es_gso_sat_P:
+  <<: *generic
+  # Sensor center frequency [MHz]
+  frequency: 7500
+  # Sensor bandwidth [MHz]
+  # NOTE: We weren't given the bandwidth 
+  bandwidth: 50
+  # System receive noise temperature [K]
+  noise_temperature: 270
+  antenna:
+    pattern: ITU-R Reg. RR. Appendice 7 Annex 3
+    # Earth station peak receive antenna gain [dBi]
+    gain: 59
+    itu_reg_rr_a7_3:
+      # Antenna diameter [m]
+      diameter: 13
 

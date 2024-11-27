@@ -24,7 +24,7 @@ for key in reference.keys():
         # "ul",
         "dl"
     ]:
-        for d in [5000, 10000, 15000, 20000]:
+        for d in [15000]:
             inps.append({
                 "definition": {
                     "single_earth_station": {

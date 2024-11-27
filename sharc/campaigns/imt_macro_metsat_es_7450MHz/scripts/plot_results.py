@@ -32,6 +32,21 @@ post_processor\
     ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_Q_7475MHz_20000m",
         legend="ES for Sat. Q (7475 MHz, 20km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_0m",
+        legend="ES for Sat. P (7475 MHz, 0m)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_5000m",
+        legend="ES for Sat. P (7475 MHz, 5km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_10000m",
+        legend="ES for Sat. P (7475 MHz, 10km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_15000m",
+        legend="ES for Sat. P (7475 MHz, 15km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_20000m",
+        legend="ES for Sat. P (7475 MHz, 20km)"
     # ).add_plot_legend_pattern(
     #     dir_name_contains="es_gso_sat_Q_7500MHz_0m",
     #     legend="ES for Sat. Q (7500 MHz, 0m)"
@@ -58,9 +73,11 @@ attributes_to_plot = [
     "system_ul_interf_power_per_mhz",
 ]
 
+def filter_fn(result_dir: str) -> bool:
+    return "20000m" in result_dir
 
-dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot)
-ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot)
+dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
+ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
 # ^: typing.List[Results]
 
 all_results = [*dl_results, *ul_results]
@@ -201,16 +218,16 @@ plot_antenna_imt = PlotAntennaPattern("")
 
 full_results = ""
 
-for result in all_results:
-    # This generates the mean, median, variance, etc
-    stats = PostProcessor.generate_statistics(
-        result=result
-    ).write_to_results_dir()
+# for result in all_results:
+#     # This generates the mean, median, variance, etc
+#     stats = PostProcessor.generate_statistics(
+#         result=result
+#     ).write_to_results_dir()
 
-    full_results += str(stats) + "\n"
-    # # do whatever you want here:
-    # if "fspl_45deg" in stats.results_output_dir:
-    #     get some stat and do something
+#     full_results += str(stats) + "\n"
+#     # # do whatever you want here:
+#     # if "fspl_45deg" in stats.results_output_dir:
+#     #     get some stat and do something
 
-with open(dl_dir + "/stats.txt", "w") as f:
-    f.write(full_results)
+# with open(dl_dir + "/stats.txt", "w") as f:
+#     f.write(full_results)

@@ -27,11 +27,38 @@ post_processor\
         dir_name_contains="es_gso_sat_Q_7475MHz_10000m",
         legend="ES for Sat. Q (7475 MHz, 10km)"
     ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_11000m",
+        legend="ES for Sat. Q (7475 MHz, 11km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_12000m",
+        legend="ES for Sat. Q (7475 MHz, 12km)"
+    ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_Q_7475MHz_15000m",
         legend="ES for Sat. Q (7475 MHz, 15km)"
     ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_Q_7475MHz_20000m",
         legend="ES for Sat. Q (7475 MHz, 20km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_0m",
+        legend="ES for Sat. P (7475 MHz, 0m)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_5000m",
+        legend="ES for Sat. P (7475 MHz, 5km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_10000m",
+        legend="ES for Sat. P (7475 MHz, 10km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_12000m",
+        legend="ES for Sat. Q (7475 MHz, 12km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_11000m",
+        legend="ES for Sat. Q (7475 MHz, 11km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_15000m",
+        legend="ES for Sat. P (7475 MHz, 15km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_20000m",
+        legend="ES for Sat. P (7475 MHz, 20km)"
     # ).add_plot_legend_pattern(
     #     dir_name_contains="es_gso_sat_Q_7500MHz_0m",
     #     legend="ES for Sat. Q (7500 MHz, 0m)"
@@ -57,8 +84,11 @@ attributes_to_plot = [
     "system_ul_interf_power_per_mhz",
 ]
 
-dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot)
-ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot)
+def filter_fn(result_dir: str) -> bool:
+    return "10000m" in result_dir
+
+dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
+ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
 # ^: typing.List[Results]
 
 all_results = [*dl_results, *ul_results]
@@ -133,38 +163,36 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
         name="1% criteria"
     )
 
-# this is not optimal at all, but it works, so...
-antenna_legends = ["Radiation Pattern of ES for Satellite Q"]
-i = 0
+# i = 0
 
-for result in all_results:
-    if "_5000m_" not in result.output_directory:
-        continue
+# for result in all_results:
+#     if "_10000m_" not in result.output_directory:
+#         continue
 
-    params_file = glob.glob(result.output_directory + "/*.yaml")[0]
-    params = Parameters()
-    params.set_file_name(params_file)
-    params.read_params()
+#     params_file = glob.glob(result.output_directory + "/*.yaml")[0]
+#     params = Parameters()
+#     params.set_file_name(params_file)
+#     params.read_params()
 
-    # TODO: use antenna factory here if it ever exists
-    legend = post_processor.get_results_possible_legends(result)[0]
-    if params.single_earth_station.antenna.pattern == "ITU-R S.465":
-        antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
-        PostProcessor.generate_antenna_radiation_pattern_plot(antenna, antenna_legends[i]).show()
-    if i == 0:
-        antenna_bs = AntennaBeamformingImt(
-            params.imt.bs.antenna.get_antenna_parameters(),
-            0,
-            0
-            # -params.imt.bs.antenna.downtilt
-        )
-        antenna_ue = AntennaBeamformingImt(
-            params.imt.ue.antenna.get_antenna_parameters(),
-            0,
-            0
-        )
+#     # TODO: use antenna factory here if it ever exists
+#     legend = post_processor.get_results_possible_legends(result)[0]
+#     if params.single_earth_station.antenna.pattern == "ITU-R S.465":
+#         antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
+#         PostProcessor.generate_antenna_radiation_pattern_plot(antenna, antenna_legends[i]).show()
+#     if i == 0:
+#         antenna_bs = AntennaBeamformingImt(
+#             params.imt.bs.antenna.get_antenna_parameters(),
+#             0,
+#             0,
+#             # -params.imt.bs.antenna.downtilt
+#         )
+#         antenna_ue = AntennaBeamformingImt(
+#             params.imt.ue.antenna.get_antenna_parameters(),
+#             0,
+#             0
+#         )
 
-    i += 1
+#     i += 1
 
 
 # Show a single plot:
@@ -181,14 +209,14 @@ if aggregated_plot:
 plot_antenna_imt = PlotAntennaPattern("")
 
 # Plot BS TX radiation patterns
-f = plot_antenna_imt.plot_element_pattern(antenna_bs, "BS", "ELEMENT")
-# f.savefig(figs_dir + "BS_element.pdf", bbox_inches='tight')
-f = plot_antenna_imt.plot_element_pattern(antenna_bs, "TX", "ARRAY")
-# f.savefig(figs_dir + "BS_array.pdf", bbox_inches='tight')
+# f = plot_antenna_imt.plot_element_pattern(antenna_bs, "BS", "ELEMENT")
+# # f.savefig(figs_dir + "BS_element.pdf", bbox_inches='tight')
+# f = plot_antenna_imt.plot_element_pattern(antenna_bs, "TX", "ARRAY")
+# # f.savefig(figs_dir + "BS_array.pdf", bbox_inches='tight')
 
-# Plot UE TX radiation patterns
-plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ELEMENT")
-plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ARRAY")
+# # Plot UE TX radiation patterns
+# plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ELEMENT")
+# plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ARRAY")
 
 # Plot every plot:
 # for plot in plots:
