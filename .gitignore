@@ -2,6 +2,7 @@
 /sharc/output/*.png
 /sharc/output_*/*
 /sharc/campaigns/*/output/
+/sharc/campaigns/*/output_*/
 
 
 __pycache__
