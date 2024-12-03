@@ -469,25 +469,36 @@ class PostProcessor:
         return FieldStatistics().load_from_sample(fieldname, sample)
 
     @staticmethod
-    def generate_antenna_radiation_pattern_plot(antenna: Antenna, title: str) -> go.Figure:
+    def generate_antenna_radiation_pattern_plot(
+        *,
+        antenna: Antenna,
+        legend: str,
+        plot_title: str,
+        plot: typing.Union[go.Figure, typing.Literal[None]] = None
+    ) -> go.Figure:
         phi = np.linspace(0.1, 100, num=100000)
-        fig = go.Figure()
         gain = antenna.calculate_gain(off_axis_angle_vec=phi)
-        fig.update_layout(
-            title=title,
-            xaxis_title=r"Off-axis angle &#934; [deg]",
-            yaxis_title="Gain [dBi]",
-            yaxis=dict(tickmode="linear", dtick=5),
-            xaxis=dict(type="log"),
-            legend_title="Labels",
-        )
 
-        fig.add_trace(
-            go.Scatter(
+        if plot is None:
+            plot = go.Figure()
+            plot.update_layout(
+                title=plot_title,
+                xaxis_title=r"Off-axis angle &#934; [deg]",
+                yaxis_title="Gain [dBi]",
+                yaxis=dict(tickmode="linear", dtick=5),
+                xaxis=dict(type="log"),
+                legend_title="Labels",
+            )
+
+        trace = go.Scatter(
                 x=phi,
                 y=gain,
                 mode="lines",
-            ),
+                name=legend
+            )
+
+        plot.add_trace(
+            trace,
         )
 
-        return fig
+        return plot
