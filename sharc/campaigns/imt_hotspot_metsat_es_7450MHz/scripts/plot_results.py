@@ -24,6 +24,21 @@ post_processor\
         dir_name_contains="es_gso_sat_Q_7475MHz_5km",
         legend="ES for Sat. GOMS with Elektro-L (5km)"
     ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_4km",
+        legend="ES for Sat. GOMS with Elektro-L (4km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_6km",
+        legend="ES for Sat. GOMS with Elektro-L (6km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_7km",
+        legend="ES for Sat. GOMS with Elektro-L (7km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_8km",
+        legend="ES for Sat. GOMS with Elektro-L (8km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_Q_7475MHz_9km",
+        legend="ES for Sat. GOMS with Elektro-L (9km)"
+    ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_Q_7475MHz_10km",
         legend="ES for Sat. GOMS with Elektro-L (10km)"
     ).add_plot_legend_pattern(
@@ -44,6 +59,21 @@ post_processor\
     ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_P_5km",
         legend="ES for Sat. P (7475 MHz, 5km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_4km",
+        legend="ES for Sat. P (7475 MHz, 4km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_6km",
+        legend="ES for Sat. P (7475 MHz, 6km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_7km",
+        legend="ES for Sat. P (7475 MHz, 7km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_8km",
+        legend="ES for Sat. P (7475 MHz, 8km)"
+    ).add_plot_legend_pattern(
+        dir_name_contains="es_gso_sat_P_9km",
+        legend="ES for Sat. P (7475 MHz, 9km)"
     ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_P_10km",
         legend="ES for Sat. P (7475 MHz, 10km)"
@@ -92,7 +122,10 @@ dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=a
 ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
 # ^: typing.List[Results]
 
-all_results = [*dl_results, *ul_results]
+all_results = [
+    *dl_results,
+    # *ul_results
+]
 
 post_processor.add_results(all_results)
 
