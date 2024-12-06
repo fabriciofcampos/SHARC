@@ -19,233 +19,20 @@ post_processor = PostProcessor()
 # This could easily come from a config file
 post_processor\
     .add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_0m",
-        legend="ES for Sat. JPSS-1 (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_10000m",
-        legend="ES for Sat. JPSS-1 (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_11000m",
-        legend="ES for Sat. JPSS-1 (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_7000m",
-        legend="ES for Sat. JPSS-1 (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_15000m",
-        legend="ES for Sat. JPSS-1 (15km)"
+        dir_name_contains="non_gso_sat_E_and_G_7780_5km",
+        legend="ES for Sat. E and G (7780 MHz) (5km)"
     ).add_plot_legend_pattern(
         dir_name_contains="sat_jpss_1_5000m",
         legend="ES for Sat. JPSS-1 (5km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_1_20000m",
-        legend="ES for Sat. JPSS-1 (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_0m",
-        legend="ES for Sat. JPSS-2 (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_10000m",
-        legend="ES for Sat. JPSS-2 (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_11000m",
-        legend="ES for Sat. JPSS-2 (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_7000m",
-        legend="ES for Sat. JPSS-2 (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_15000m",
-        legend="ES for Sat. JPSS-2 (15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_5000m",
-        legend="ES for Sat. JPSS-2 (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="sat_jpss_2_20000m",
-        legend="ES for Sat. JPSS-2 (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_0m",
-        legend="ES for Sat. F (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_10000m",
-        legend="ES for Sat. F (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_11000m",
-        legend="ES for Sat. F (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_7000m",
-        legend="ES for Sat. F (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_15000m",
-        legend="ES for Sat. F (15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_5000m",
-        legend="ES for Sat. F (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_F_20000m",
-        legend="ES for Sat. F (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_0m",
-        legend="ES for Sat. E and G (7820 MHz) (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_2km",
-        legend="ES for Sat. E and G (7820 MHz) (2km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_3km",
-        legend="ES for Sat. E and G (7820 MHz) (3km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_4km",
-        legend="ES for Sat. E and G (7820 MHz) (4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_10000m",
-        legend="ES for Sat. E and G (7820 MHz) (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_11000m",
-        legend="ES for Sat. E and G (7820 MHz) (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_7000m",
-        legend="ES for Sat. E and G (7820 MHz) (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_15000m",
-        legend="ES for Sat. E and G (7820 MHz) (15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_5000m",
-        legend="ES for Sat. E and G (7820 MHz) (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7820_20000m",
-        legend="ES for Sat. E and G (7820 MHz) (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_0m",
-        legend="ES for Sat. E and G (7780 MHz) (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_2km",
-        legend="ES for Sat. E and G (7780 MHz) (2km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_4km",
-        legend="ES for Sat. E and G (7780 MHz) (4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_6km",
-        legend="ES for Sat. E and G (7780 MHz) (6km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_8km",
-        legend="ES for Sat. E and G (7780 MHz) (8km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_3km",
-        legend="ES for Sat. E and G (7780 MHz) (3km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_4km",
-        legend="ES for Sat. E and G (7780 MHz) (4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_5km",
-        legend="ES for Sat. E and G (7780 MHz) (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_7km",
-        legend="ES for Sat. E and G (7780 MHz) (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_10000m",
-        legend="ES for Sat. E and G (7780 MHz) (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_11000m",
-        legend="ES for Sat. E and G (7780 MHz) (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_7000m",
-        legend="ES for Sat. E and G (7780 MHz) (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_15000m",
-        legend="ES for Sat. E and G (7780 MHz) (15km)"
-    ).add_plot_legend_pattern(
         dir_name_contains="non_gso_sat_E_and_G_7780_5000m",
         legend="ES for Sat. E and G (7780 MHz) (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_E_and_G_7780_20000m",
-        legend="ES for Sat. E and G (7780 MHz) (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_2km",
-        legend="ES for Sat. C and S (2km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_4km",
-        legend="ES for Sat. C and S (4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_6km",
-        legend="ES for Sat. C and S (6km)"
     ).add_plot_legend_pattern(
         dir_name_contains="non_gso_sat_C_and_S_5km",
         legend="ES for Sat. C and S (5km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_7km",
-        legend="ES for Sat. C and S (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_8km",
-        legend="ES for Sat. C and S (8km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_8km",
-        legend="ES for Sat. C and S (8km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_3km",
-        legend="ES for Sat. C and S (3km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_4km",
-        legend="ES for Sat. C and S (4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_0m",
-        legend="ES for Sat. C and S (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_10000m",
-        legend="ES for Sat. C and S (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_11000m",
-        legend="ES for Sat. C and S (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_7000m",
-        legend="ES for Sat. C and S (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_15000m",
-        legend="ES for Sat. C and S (15km)"
-    ).add_plot_legend_pattern(
         dir_name_contains="non_gso_sat_C_and_S_5000m",
         legend="ES for Sat. C and S (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_C_and_S_20000m",
-        legend="ES for Sat. C and S (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_0m",
-        legend="ES for Sat. AN (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_10000m",
-        legend="ES for Sat. AN (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_11000m",
-        legend="ES for Sat. AN (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_7000m",
-        legend="ES for Sat. AN (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_15000m",
-        legend="ES for Sat. AN (15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_5000m",
-        legend="ES for Sat. AN (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_AN_20000m",
-        legend="ES for Sat. AN (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_0m",
-        legend="ES for Sat. BF (0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_10000m",
-        legend="ES for Sat. BF (10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_11000m",
-        legend="ES for Sat. BF (11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_7000m",
-        legend="ES for Sat. BF (7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_15000m",
-        legend="ES for Sat. BF (15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_5000m",
-        legend="ES for Sat. BF (5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="non_gso_sat_BF_20000m",
-        legend="ES for Sat. BF (20km)"
     )
 
 attributes_to_plot = [
@@ -257,18 +44,28 @@ attributes_to_plot = [
 ]
 
 def filter_fn(x):
+    return True
     return ("E_and_G" in x
         or "C_and_S" in x
     ) and ("5000m" in x or "5km" in x)
 
-dl_results = Results.load_many_from_dir(dl_dir, only_latest=True,
-    # only_samples=attributes_to_plot,
+dl_results = Results.load_many_from_dir(
+    dl_dir, only_latest=True,
+    only_samples=attributes_to_plot,
     filter_fn=filter_fn
 )
-ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
+# ul_results = Results.load_many_from_dir(
+#     os.path.join(campaign_base_dir, "output_ul"),
+#     only_latest=True,
+#     only_samples=attributes_to_plot,
+#     filter_fn=filter_fn
+# )
 # ^: typing.List[Results]
 
-all_results = [*dl_results, *ul_results]
+all_results = [
+    *dl_results,
+    # *ul_results
+]
 
 post_processor.add_results(all_results)
 
@@ -317,8 +114,87 @@ if system_ul_interf_power_plot:
         name="0.0016% criteria"
     )
 
+i = 0
+antenna_bs = None
+antenna_ue = None
+
+antenna_radiation_plot  = None
+
+for result in all_results:
+    if "_5000m_" not in result.output_directory and "_5km_" not in result.output_directory:
+        continue
+
+    params_file = glob.glob(result.output_directory + "/*.yaml")[0]
+    params = Parameters()
+    params.set_file_name(params_file)
+    params.read_params()
+
+    # TODO: use antenna factory here if it ever exists
+    legend = post_processor.get_results_possible_legends(result)[0]
+    if params.single_earth_station.antenna.pattern == "ITU-R S.465":
+        antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
+    if params.single_earth_station.antenna.pattern == "ITU-R S.580":
+        antenna = AntennaS580(params.single_earth_station.antenna.itu_r_s_580)
+    antenna_radiation_plot = PostProcessor.generate_antenna_radiation_pattern_plot(
+        plot_title="Antenna Radiation Patterns",
+        antenna=antenna, legend=legend["legend"][:-6], plot=antenna_radiation_plot,
+    )
+
+    if i == 0:
+        antenna_bs = AntennaBeamformingImt(
+            params.imt.bs.antenna.get_antenna_parameters(),
+            0,
+            0,
+            # -params.imt.bs.antenna.downtilt
+        )
+        antenna_ue = AntennaBeamformingImt(
+            params.imt.ue.antenna.get_antenna_parameters(),
+            0,
+            0
+        )
+
+    i += 1
+
+antenna_radiation_plot.show()
+
+for pl_name in attributes_to_plot:
+    plot = post_processor\
+        .get_plot_by_results_attribute_name(pl_name)
+    if plot:
+        plot.show()
+
+
+plot_antenna_imt = PlotAntennaPattern("")
+
+# Plot BS TX radiation patterns
+f = plot_antenna_imt.plot_element_pattern(antenna_bs, "BS", "ELEMENT")
+# f.savefig(figs_dir + "BS_element.pdf", bbox_inches='tight')
+f = plot_antenna_imt.plot_element_pattern(antenna_bs, "TX", "ARRAY")
+# f.savefig(figs_dir + "BS_array.pdf", bbox_inches='tight')
+
+# Plot UE TX radiation patterns
+plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ELEMENT")
+plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ARRAY")
+
+full_results = ""
+
+for result in all_results:
+    # This generates the mean, median, variance, etc
+    stats = PostProcessor.generate_statistics(
+        result=result
+    ).write_to_results_dir()
+
+    full_results += str(stats) + "\n"
+    # # do whatever you want here:
+    # if "fspl_45deg" in stats.results_output_dir:
+    #     get some stat and do something
+
+with open(dl_dir + "/stats.txt", "w") as fl:
+    fl.write(full_results)
+
+
 # # Aggregate results.
-# # TODO: Need to update building entry loss before simulating UL
+# # TODO: Need to check if building entry loss needs update before simulating UL
 
 # aggregated_plot = None
 # if system_ul_interf_power_plot and system_dl_interf_power_plot:
@@ -359,107 +235,3 @@ if system_ul_interf_power_plot:
 #         name="1% criteria"
 #     )
 
-# this is not optimal at all, but it works, so...
-antenna_legend_start = "Radiation Pattern of "
-i = 0
-
-antenna_bs = None
-antenna_ue = None
-
-# fig = go.Figure()
-# fig.update_layout(
-#     title="Radiation Patterns",
-#     xaxis_title=r"Off-axis angle &#934; [deg]",
-#     yaxis_title="Gain [dBi]",
-#     yaxis=dict(tickmode="linear", dtick=5),
-#     xaxis=dict(type="log"),
-#     legend_title="Labels",
-# )
-
-# for result in all_results:
-#     if "_5000m_" not in result.output_directory and "_5km_" not in result.output_directory:
-#         continue
-
-#     params_file = glob.glob(result.output_directory + "/*.yaml")[0]
-#     params = Parameters()
-#     params.set_file_name(params_file)
-#     params.read_params()
-
-#     # TODO: use antenna factory here if it ever exists
-#     legend = post_processor.get_results_possible_legends(result)[0]
-#     if params.single_earth_station.antenna.pattern == "ITU-R S.465":
-#         antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
-#     if params.single_earth_station.antenna.pattern == "ITU-R S.580":
-#         antenna = AntennaS580(params.single_earth_station.antenna.itu_r_s_580)
-#     _plot, trace = PostProcessor.generate_antenna_radiation_pattern_plot(
-#         antenna, legend["legend"][:-6]
-#     )
-#     fig.add_trace(trace)
-#     if i == 0:
-#         antenna_bs = AntennaBeamformingImt(
-#             params.imt.bs.antenna.get_antenna_parameters(),
-#             0,
-#             0,
-#             # -params.imt.bs.antenna.downtilt
-#         )
-#         antenna_ue = AntennaBeamformingImt(
-#             params.imt.ue.antenna.get_antenna_parameters(),
-#             0,
-#             0
-#         )
-
-#     i += 1
-
-# params = Parameters()
-# params.single_earth_station.antenna.itu_r_s_465.diameter = 3
-# params.single_earth_station.antenna.itu_r_s_465.antenna_gain = 44.3
-# params.single_earth_station.antenna.itu_r_s_465.frequency = 7825
-# antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
-# _plot, trace = PostProcessor.generate_antenna_radiation_pattern_plot(
-#     antenna, "ES For Sat. AN"
-# )
-
-# fig.add_trace(trace)
-# fig.show()
-# Show a single plot:
-for pl_name in attributes_to_plot:
-    plot = post_processor\
-        .get_plot_by_results_attribute_name(pl_name)
-    if plot:
-        plot.show()
-
-# if aggregated_plot:
-#     aggregated_plot.show()
-
-
-plot_antenna_imt = PlotAntennaPattern("")
-
-# Plot BS TX radiation patterns
-# f = plot_antenna_imt.plot_element_pattern(antenna_bs, "BS", "ELEMENT")
-# # f.savefig(figs_dir + "BS_element.pdf", bbox_inches='tight')
-# f = plot_antenna_imt.plot_element_pattern(antenna_bs, "TX", "ARRAY")
-# # f.savefig(figs_dir + "BS_array.pdf", bbox_inches='tight')
-
-# # Plot UE TX radiation patterns
-# plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ELEMENT")
-# plot_antenna_imt.plot_element_pattern(antenna_ue, "UE", "ARRAY")
-
-# Plot every plot:
-for plot in plots:
-    plot.show()
-
-full_results = ""
-
-for result in all_results:
-    # This generates the mean, median, variance, etc
-    stats = PostProcessor.generate_statistics(
-        result=result
-    ).write_to_results_dir()
-
-    full_results += str(stats) + "\n"
-    # # do whatever you want here:
-    # if "fspl_45deg" in stats.results_output_dir:
-    #     get some stat and do something
-
-with open(dl_dir + "/stats.txt", "w") as fl:
-    fl.write(full_results)

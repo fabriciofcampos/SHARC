@@ -19,45 +19,45 @@ post_processor = PostProcessor()
 post_processor\
     .add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_Q_7475MHz_0m",
-        legend="ES for Sat. Q (7475 MHz, 0m)"
+        legend="ES for Sat. GOMS with Elektro-L (0m)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_5000m",
-        legend="ES for Sat. Q (7475 MHz, 5km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_5km",
+        legend="ES for Sat. GOMS with Elektro-L (5km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_10000m",
-        legend="ES for Sat. Q (7475 MHz, 10km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_10km",
+        legend="ES for Sat. GOMS with Elektro-L (10km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_11000m",
-        legend="ES for Sat. Q (7475 MHz, 11km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_11km",
+        legend="ES for Sat. GOMS with Elektro-L (11km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_12000m",
-        legend="ES for Sat. Q (7475 MHz, 12km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_12km",
+        legend="ES for Sat. GOMS with Elektro-L (12km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_15000m",
-        legend="ES for Sat. Q (7475 MHz, 15km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_15km",
+        legend="ES for Sat. GOMS with Elektro-L (15km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_20000m",
-        legend="ES for Sat. Q (7475 MHz, 20km)"
+        dir_name_contains="es_gso_sat_Q_7475MHz_20km",
+        legend="ES for Sat. GOMS with Elektro-L (20km)"
     ).add_plot_legend_pattern(
         dir_name_contains="es_gso_sat_P_0m",
         legend="ES for Sat. P (7475 MHz, 0m)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_5000m",
+        dir_name_contains="es_gso_sat_P_5km",
         legend="ES for Sat. P (7475 MHz, 5km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_10000m",
+        dir_name_contains="es_gso_sat_P_10km",
         legend="ES for Sat. P (7475 MHz, 10km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_12000m",
-        legend="ES for Sat. Q (7475 MHz, 12km)"
+        dir_name_contains="es_gso_sat_P_12km",
+        legend="ES for Sat. P (7475 MHz, 12km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_11000m",
-        legend="ES for Sat. Q (7475 MHz, 11km)"
+        dir_name_contains="es_gso_sat_P_11km",
+        legend="ES for Sat. P (7475 MHz, 11km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_15000m",
+        dir_name_contains="es_gso_sat_P_15km",
         legend="ES for Sat. P (7475 MHz, 15km)"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_20000m",
+        dir_name_contains="es_gso_sat_P_20km",
         legend="ES for Sat. P (7475 MHz, 20km)"
     # ).add_plot_legend_pattern(
     #     dir_name_contains="es_gso_sat_Q_7500MHz_0m",
@@ -85,7 +85,8 @@ attributes_to_plot = [
 ]
 
 def filter_fn(result_dir: str) -> bool:
-    return "10000m" in result_dir
+    # return "10000m" in result_dir
+    return True
 
 dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
 ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
@@ -200,7 +201,13 @@ for pl_name in attributes_to_plot:
     plot = post_processor\
         .get_plot_by_results_attribute_name(pl_name)
     if plot:
-        plot.show()
+        # plot.show()
+        if not os.path.exists(os.path.join(campaign_base_dir, "output")):
+            os.mkdir(os.path.join(campaign_base_dir, "output"))
+        if not os.path.exists(os.path.join(campaign_base_dir, "output", "figs")):
+            os.mkdir(os.path.join(campaign_base_dir, "output", "figs"))
+
+        plot.write_image(os.path.join(campaign_base_dir, "output", "figs", f"{pl_name}.jpg"))
 
 if aggregated_plot:
     aggregated_plot.show()

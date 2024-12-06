@@ -21,10 +21,10 @@ for key in reference.keys():
     if key in CONST_KEYS or key in IGNORE_KEYS:
         continue
     for link in [
-        # "ul",
+        "ul",
         "dl"
     ]:
-        for d in [5, 7]:
+        for d in [0,1,2,3,4,5]:
             inps.append({
                 "definition": {
                     "single_earth_station": {

@@ -1,5 +1,6 @@
 # Biggest TODO's:
-# @important NOTE: if adjacent band is used, we need to implement other mask
+# @important NOTE: if adjacent band is used, we need to implement other mask, or use aclr as implemented in
+# https://github.com/Radio-Spectrum/SHARC/commit/bbc92dc8a2a181a3d066b1792cb38836b6098d9a#diff-7b9d87e26b6c151185f5a87aa471a9e0f453364989acec14fe375eaae7910c14
 # P452 path loss parameters
 # use new AAS antenna model
 # UE distribution
@@ -368,24 +369,24 @@ generic: &generic
 # - 7.450MHz - 7.550MHz (s-to-E)
 
 # ITU-R SA.2488 Table 19
-# es_gso_sat_Q_7475MHz: &es_gso_sat_Q_7475MHz
-#   <<: *generic
-#   # Sensor center frequency [MHz]
-#   frequency: 7475
-#   # Sensor bandwidth [MHz]
-#   # NOTE: it can be verified that for all active satellites in
-#   # https://space.oscar.wmo.int/satellites/view/electro_goms
-#   # the bandwidth is 73000 kHz
-#   bandwidth: 73
-#   # System receive noise temperature [K]
-#   noise_temperature: 150
-#   antenna:
-#     pattern: ITU-R S.465
-#     # Earth station peak receive antenna gain [dBi]
-#     gain: 50
-#     itu_r_s_465:
-#       # Antenna diameter [m]
-#       diameter: 5
+es_gso_sat_Q_7475MHz: &es_gso_sat_Q_7475MHz
+  <<: *generic
+  # Sensor center frequency [MHz]
+  frequency: 7475
+  # Sensor bandwidth [MHz]
+  # NOTE: it can be verified that for all active satellites in
+  # https://space.oscar.wmo.int/satellites/view/electro_goms
+  # the bandwidth is 73000 kHz
+  bandwidth: 73
+  # System receive noise temperature [K]
+  noise_temperature: 150
+  antenna:
+    pattern: ITU-R S.465
+    # Earth station peak receive antenna gain [dBi]
+    gain: 50
+    itu_r_s_465:
+      # Antenna diameter [m]
+      diameter: 5
 
 # # Almost the same as the previous ES, so no value:
 # es_gso_sat_Q_7500MHz:
