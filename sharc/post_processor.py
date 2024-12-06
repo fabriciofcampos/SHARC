@@ -542,6 +542,42 @@ class PostProcessor:
         return (x, 1 - y)
 
     @staticmethod
+    def save_plots(
+        dir: str,
+        plots: list[go.Figure],
+        *,
+        width=1200,
+        height=800
+    ) -> None:
+        """
+        dir: A directory path on which to save the plot files
+        plots: Figures to save. They are saved by their name
+        """
+        pathlib.Path(dir).mkdir(parents=True, exist_ok=True)
+
+        for plot in plots:
+            # TODO: check if reset to previous state is functional
+            # so much state used in this post processor, should def. migrate
+            # post processing to Haskell (obv. not rly)
+            prev_autosize = plot.layout.autosize
+            prev_width = plot.layout.width
+            prev_height = plot.layout.height
+
+            plot.update_layout(
+                autosize=False,
+                width=width,
+                height=height
+            )
+
+            plot.write_image(os.path.join(dir, f"{plot.layout.title.text}.jpg"))
+
+            plot.update_layout(
+                autosize=prev_autosize,
+                width=prev_width,
+                height=prev_height
+            )
+
+    @staticmethod
     def generate_statistics(result: Results) -> ResultsStatistics:
         return ResultsStatistics().load_from_results(result)
 
