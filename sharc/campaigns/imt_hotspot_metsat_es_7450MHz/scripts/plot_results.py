@@ -129,35 +129,41 @@ all_results = [
 
 post_processor.add_results(all_results)
 
-plots = post_processor.generate_cdf_plots_from_results(
-    all_results
+post_processor.add_plots(
+    post_processor.generate_ccdf_plots_from_results(
+        all_results
+    )
+)
+post_processor.add_plots(
+    post_processor.generate_cdf_plots_from_results(
+        all_results
+    )
 )
 
-post_processor.add_plots(plots)
+# Add a protection criteria line:
+# dB to dBm (+ 30)
+# the following conversion makes the criteria more strict, so there may not be a problem
+plots_to_add_vline = [
+    "system_ul_interf_power_per_mhz",
+    "system_dl_interf_power_per_mhz"
+]
+interf_protection_criteria = -154 + 30
 
-# Show a single plot:
+for prop_name in plots_to_add_vline:
+    for plot_type in ["cdf", "ccdf"]:
+        plt = post_processor\
+            .get_plot_by_results_attribute_name(prop_name, plot_type=plot_type)
+        if plt:
+            plt.add_vline(
+                interf_protection_criteria, line_dash="dash",
+                name="1% criteria"
+            )
+
 system_dl_interf_power_plot = post_processor\
     .get_plot_by_results_attribute_name("system_dl_interf_power_per_mhz")
 
 system_ul_interf_power_plot = post_processor\
     .get_plot_by_results_attribute_name("system_ul_interf_power_per_mhz")
-
-# Add a protection criteria line:
-# dB to dBm (+ 30)
-# the following conversion makes the criteria more strict, so there may not be a problem
-interf_protection_criteria = -154 + 30
-
-if system_dl_interf_power_plot:
-    system_dl_interf_power_plot.add_vline(
-        interf_protection_criteria, line_dash="dash",
-        name="1% criteria"
-    )
-if system_ul_interf_power_plot:
-    system_ul_interf_power_plot.add_vline(
-        interf_protection_criteria, line_dash="dash",
-        name="1% criteria"
-    )
-
 aggregated_plot = None
 if system_ul_interf_power_plot and system_dl_interf_power_plot:
     aggregated_plot = go.Figure()
@@ -230,17 +236,11 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
 
 
 # Show a single plot:
-for pl_name in attributes_to_plot:
-    plot = post_processor\
-        .get_plot_by_results_attribute_name(pl_name)
-    if plot:
-        # plot.show()
-        if not os.path.exists(os.path.join(campaign_base_dir, "output")):
-            os.mkdir(os.path.join(campaign_base_dir, "output"))
-        if not os.path.exists(os.path.join(campaign_base_dir, "output", "figs")):
-            os.mkdir(os.path.join(campaign_base_dir, "output", "figs"))
 
-        plot.write_image(os.path.join(campaign_base_dir, "output", "figs", f"{pl_name}.jpg"))
+PostProcessor.save_plots(
+    os.path.join(campaign_base_dir, "output", "figs"),
+    post_processor.plots,
+)
 
 if aggregated_plot:
     aggregated_plot.show()
