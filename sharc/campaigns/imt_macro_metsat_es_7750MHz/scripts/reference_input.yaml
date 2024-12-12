@@ -4,7 +4,7 @@
 general:
     ###########################################################################
     # Number of simulation snapshots
-    num_snapshots: 10000
+    num_snapshots: 62500
     ###########################################################################
     # IMT link that will be simulated (DOWNLINK or UPLINK)
     imt_link: DOWNLINK
@@ -134,7 +134,7 @@ imt:
             # NOTE: From Annex 4.2 to Doc 5D/413-E, Table 10
             # NOTE: Small cell outdoor/micro urban uses = 0.7
             # NOTE: With new antenna model, macrocell should = 2.1
-            element_vert_spacing: 0.7
+            element_vert_spacing: 2.1
             # BS/UE front to back ratio of single element [dB]
             # NOTE: From Annex 4.2 to Doc 5D/413-E, Table 10
             element_am: 30
@@ -147,6 +147,19 @@ imt:
             #       Original value: 12 (Rec. ITU-R M.2101)
             # NOTE: assumed
             multiplication_factor: 12
+            ###########################################################################
+            # Subarray for IMT as defined in R23-WP5D-C-0413, Annex 4.2
+            # Single column sub array
+            subarray:
+                # NOTE: if subarray is enabled, element definition will mostly come from
+                # the above definitions
+                is_enabled: true
+                # Rows per subarray
+                n_rows: 3
+                # Sub array element spacing (d/lambda).
+                element_vert_spacing: 0.7
+                # Sub array eletrical downtilt [deg]
+                eletrical_downtilt: 3.0
 
     ue:
         # Number of UEs that are allocated to each cell within handover margin.
@@ -390,21 +403,21 @@ generic: &generic
 # #   bandwidth: 30
 
 
-# # non_gso_sat_F:
-# #   <<: *generic
-# #   # Sensor center frequency [MHz]
-# #   frequency: 7800
-# #   # Sensor bandwidth [MHz]
-# #   bandwidth: 63
-# #   # System receive noise temperature [K]
-# #   noise_temperature: 180
-# #   antenna:
-# #     pattern: ITU-R S.465
-# #     # Earth station peak receive antenna gain [dBi]
-# #     gain: 55
-# #     itu_r_s_465:
-# #       # Antenna diameter [m]
-# #       diameter: 10
+# non_gso_sat_F:
+#   <<: *generic
+#   # Sensor center frequency [MHz]
+#   frequency: 7800
+#   # Sensor bandwidth [MHz]
+#   bandwidth: 63
+#   # System receive noise temperature [K]
+#   noise_temperature: 180
+#   antenna:
+#     pattern: ITU-R S.465
+#     # Earth station peak receive antenna gain [dBi]
+#     gain: 55
+#     itu_r_s_465:
+#       # Antenna diameter [m]
+#       diameter: 10
 
 non_gso_sat_E_and_G_7780: &non_gso_sat_E_and_G_7780
   <<: *generic

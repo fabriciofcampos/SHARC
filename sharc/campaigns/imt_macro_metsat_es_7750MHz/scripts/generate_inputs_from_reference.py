@@ -24,7 +24,7 @@ for key in reference.keys():
         # "ul",
         "dl"
     ]:
-        for d in [15000]:
+        for d in [5]:
             inps.append({
                 "definition": {
                     "single_earth_station": {
@@ -45,15 +45,15 @@ for key in reference.keys():
                         "adjacent_antenna_model": "BEAMFORMING" if link == "dl" else "SINGLE_ELEMENT",
                         "output_dir_prefix":
                             base["general"]["output_dir_prefix"].replace(
-                                "<subs>", f"{key}_{int(d)}m_16x8"
+                                "<subs>", f"{key}_{int(d)}km"
                             ),
                             "output_dir": base["general"]["output_dir"].replace(
-                                "/output/", f"/output_{link}_16x8/"
+                                "/output/", f"/output_{link}/"
                             )
                     },
                 },
-                "key": f"{key}_{int(d)}_m_16x8_{link}",
-                "bs_x": d
+                "key": f"{key}_{int(d)}km_{link}",
+                "bs_x": d * 1000
             })
 
 path_to_inputs = path_to_scripts / ".." / "input"
