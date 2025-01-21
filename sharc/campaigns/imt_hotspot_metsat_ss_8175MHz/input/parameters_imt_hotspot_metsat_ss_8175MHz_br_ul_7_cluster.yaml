@@ -26,7 +26,7 @@ general:
     output_dir  : campaigns/imt_hotspot_metsat_ss_8175MHz/output/
     ###########################################################################
     # output folder prefix
-    output_dir_prefix  : output_imt_metsat_ss_8175MHz_sa_dl
+    output_dir_prefix  : output_imt_metsat_ss_8175MHz_br_7_cluster_ul
 
 imt:
     # Minimum 2D separation distance from BS to UE [m]
@@ -68,12 +68,12 @@ imt:
             # Inter-site distance in macrocell network topology [m]
             # Since we need to cover an area of A = 17.840.000 km^2
             # A = pi * (2.5*ISD)^2  =>  ISD = sqrt(A)/(2.5*pi)
-            # ISD = 537 km
-            intersite_distance: 537000
+            # ISD = 263 km
+            intersite_distance: 263000
             # Enable wrap around.
             wrap_around: true
             # Number of clusters in macro cell topology
-            num_clusters: 1
+            num_clusters: 7
             ###########################################################################
             # Number of hotspots per macro cell (sector)
             num_hotspots_per_cell: 3
@@ -321,10 +321,10 @@ single_space_station:
     es_altitude: 1200
     ###########################################################################
     # earth station lat long [deg]
-    es_lat_deg: -15.5989
+    es_lat_deg: -15.68503
     ###########################################################################
     # earth station lat long [deg]
-    es_long_deg: -56.0949
+    es_long_deg: -47.67915
     # Azimuth angle
     azimuth:
       # doesn't really matter for this case
@@ -343,13 +343,14 @@ single_space_station:
       fixed:
         # NOTE: we're setting this on the script
         lat_deg: 0
-        long_deg: 0
+        long_deg: -14.5
   antenna:
       ###########################################################################
       # Choose the antenna pattern. Can be one of:
       # "OMNI", "ITU-R F.699", "ITU-R S.465", "ITU-R S.580", "MODIFIED ITU-R S.465",
       # "ITU-R S.1855", "ITU-R S.672"
-      pattern: ITU-R S.672
+      # since 20deg beamwidth would already cover every area
+      pattern: OMNI
       ###########################################################################
       # Station peak receive antenna gain [dBi]
       gain: 28

@@ -70,8 +70,8 @@ relevant.add_trace(
 
 relevant.show()
 
-for result in many_results:
-    # This generates the mean, median, variance, etc
-    stats = PostProcessor.generate_statistics(
-        result=result
-    ).write_to_results_dir()
+# for result in many_results:
+#     # This generates the mean, median, variance, etc
+#     stats = PostProcessor.generate_statistics(
+#         result=result
+#     ).write_to_results_dir()

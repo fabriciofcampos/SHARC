@@ -473,6 +473,9 @@ class PostProcessor:
                 + f"ul_tdd_factor must be in interval [0, 1], but is {ul_tdd_factor}"
             )
 
+        # % Define os fatores de segmento
+        # SF_LG = round(4*204248/(7*19*3*1));
+        # SF_SM = round(4*105/(7*19*3*1));
         segment_factor = round(n_bs_actual / n_bs_sim)
 
         dl_tdd_factor = 1 - ul_tdd_factor
@@ -488,6 +491,11 @@ class PostProcessor:
 
         for i in range(n_aggregate):
             # choose S random samples
+            # % Define os índices para o Monte Carlo
+            # Ind_DL_LG = round(rand(N,floor(SF_LG))*(N-1))+1;
+            # Ind_UL_LG = round(rand(N,floor(SF_LG))*(N-1))+1;
+            # Ind_DL_SM = round(rand(N,floor(SF_SM))*(N-1))+1;
+            # Ind_UL_SM = round(rand(N,floor(SF_SM))*(N-1))+1; 
             ul_random_indexes = np.floor(
                 random_number_gen.random(size=segment_factor)
                 * len(ul_samples)
@@ -501,12 +509,14 @@ class PostProcessor:
             if ul_tdd_factor:
                 for j in ul_random_indexes:  # random samples
                     aggregate_samples[i] += (
+                        # % Define as variáveis de INR (linear)
                         np.power(10, ul_samples[int(j)] / 10) * ul_tdd_factor
                     )
 
             if dl_tdd_factor:
                 for j in dl_random_indexes:  # random samples
                     aggregate_samples[i] += (
+                        # % Define as variáveis de INR (linear)
                         np.power(10, dl_samples[int(j)] / 10) * dl_tdd_factor
                     )
 

@@ -471,6 +471,8 @@ class Simulation(ABC, Observable):
 
         elif not station_1.is_imt_station():
             phi, theta = station_1.get_pointing_vector_to(station_2)
+            print("phi", phi)
+            print("theta", theta)
             beams_idx = np.zeros(len(station_2_active), dtype=int)
 
         # Calculate gains
@@ -511,6 +513,14 @@ class Simulation(ABC, Observable):
         elif not station_1.is_imt_station():
 
             off_axis_angle = station_1.get_off_axis_angle(station_2)
+            print("station_1.x", station_1.x[0])
+            print("station_1.y", station_1.y[0])
+            print("station_1.height", station_1.height[0])
+            print("station_2.x", station_2.x[0])
+            print("station_2.y", station_2.y[0])
+            print("station_2.height", station_2.height[0])
+            print("off_axis_angle", off_axis_angle[0][0])
+            exit()
             distance = station_1.get_distance_to(station_2)
             theta = np.degrees(
                 np.arctan2(

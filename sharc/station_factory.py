@@ -50,6 +50,7 @@ from sharc.antenna.antenna_s1855 import AntennaS1855
 from sharc.antenna.antenna_sa509 import AntennaSA509
 from sharc.antenna.antenna_beamforming_imt import AntennaBeamformingImt
 from sharc.topology.topology import Topology
+from sharc.topology.topology_factory import TopologyFactory
 from sharc.topology.topology_macrocell import TopologyMacrocell
 from sharc.mask.spectral_mask_3gpp import SpectralMask3Gpp
 
@@ -671,7 +672,9 @@ class StationFactory(object):
             ) * 1000,
         ])
 
+        # TODO: we may need to also correct azimuth, but no matter here really
         space_station.azimuth = param.geometry.azimuth.fixed
+        # we need to correct the elevation considering the simulator runs on 2d
         space_station.elevation = param.geometry.elevation.fixed
 
         space_station.active = np.array([True])
@@ -1266,81 +1269,42 @@ if __name__ == '__main__':
     # plot uniform distribution in macrocell scenario
 
     factory = StationFactory()
-    topology = TopologyMacrocell(1000, 1)
-    topology.calculate_coordinates()
 
-    class ParamsAux(object):
-        def __init__(self):
-            self.spectral_mask = 'IMT-2020'
-            self.frequency = 10000
-            self.topology = 'MACROCELL'
-            self.ue_distribution_type = "UNIFORM_IN_CELL"
-            self.bs_height = 30
-            self.ue_height = 3
-            self.ue_indoor_percent = 0
-            self.ue_k = 3
-            self.ue_k_m = 1
-            self.bandwidth = np.random.rand()
-            self.ue_noise_figure = np.random.rand()
-            self.minimum_separation_distance_bs_ue = 200
-            self.spurious_emissions = -30
-            self.intersite_distance = 1000
+    file = "sharc/campaigns/imt_hotspot_metsat_es_7750MHz/input/parameter_non_gso_sat_C_and_S_5km_dl.yaml"
 
-    params = ParamsAux()
+    params = Parameters()
+    params.set_file_name(file)
+    params.read_params()
 
-    bs_ant_param = ParametersAntennaImt()
+    random_number_gen = np.random.RandomState(1)
 
-    bs_ant_param.adjacent_antenna_model = "SINGLE_ELEMENT"
-    bs_ant_param.element_pattern = "F1336"
-    bs_ant_param.element_max_g = 5
-    bs_ant_param.element_phi_3db = 65
-    bs_ant_param.element_theta_3db = 65
-    bs_ant_param.element_am = 30
-    bs_ant_param.element_sla_v = 30
-    bs_ant_param.n_rows = 8
-    bs_ant_param.n_columns = 8
-    bs_ant_param.element_horiz_spacing = 0.5
-    bs_ant_param.element_vert_spacing = 0.5
-    bs_ant_param.downtilt = 10
-    bs_ant_param.multiplication_factor = 12
-    bs_ant_param.minimum_array_gain = -200
+    topology = TopologyFactory.createTopology(params)
+    topology.calculate_coordinates(random_number_gen)
 
-    ue_ant_param = ParametersAntennaImt()
-
-    ue_ant_param.element_pattern = "FIXED"
-    ue_ant_param.element_max_g = 5
-    ue_ant_param.element_phi_3db = 90
-    ue_ant_param.element_theta_3db = 90
-    ue_ant_param.element_am = 25
-    ue_ant_param.element_sla_v = 25
-    ue_ant_param.n_rows = 4
-    ue_ant_param.n_columns = 4
-    ue_ant_param.element_horiz_spacing = 0.5
-    ue_ant_param.element_vert_spacing = 0.5
-    ue_ant_param.multiplication_factor = 12
-    ue_ant_param.minimum_array_gain = -200
-
-    ue_ant_param.normalization = False
-    bs_ant_param.normalization = False
-
-    rnd = np.random.RandomState(1)
-
-    imt_ue = factory.generate_imt_ue(params, ue_ant_param, topology, rnd)
-
+    imt_ue = StationFactory.generate_imt_ue(
+        params.imt,
+        params.imt.ue.antenna,
+        topology, random_number_gen,
+    )
     fig = plt.figure(
         figsize=(8, 8), facecolor='w',
         edgecolor='k',
     )  # create a figure object
     ax = fig.add_subplot(1, 1, 1)  # create an axes object in the figure
 
+    ax.scatter(
+        imt_ue.x, imt_ue.y, color='b', edgecolor="b",
+        linewidth=1, label="UE",
+    )
+
     topology.plot(ax)
 
     plt.axis('image')
-    plt.title("Macro cell topology")
+    plt.title("topology")
     plt.xlabel("x-coordinate [m]")
     plt.ylabel("y-coordinate [m]")
 
-    plt.plot(imt_ue.x, imt_ue.y, "r.")
+    # plt.plot(imt_ue.x, imt_ue.y, "r.")
 
     plt.tight_layout()
     plt.show()

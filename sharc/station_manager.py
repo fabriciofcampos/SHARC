@@ -246,6 +246,9 @@ class StationManager(object):
         Az0 = self.azimuth
 
         a = 90 - self.elevation
+        print("self.elevation", self.elevation)
+        print("self.azimuth", self.azimuth)
+        # exit()
         C = Az0 - Az
 
         phi = np.arccos(
