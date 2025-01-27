@@ -26,7 +26,7 @@ general:
     output_dir  : campaigns/imt_macro_metsat_ss_8175MHz/output/
     ###########################################################################
     # output folder prefix
-    output_dir_prefix  : output_imt_metsat_ss_8175MHz_sa_7_cluster_dl
+    output_dir_prefix  : output_imt_metsat_ss_8175MHz_br_7_cluster_dl
 
 imt:
     # Minimum 2D separation distance from BS to UE [m]
@@ -71,8 +71,8 @@ imt:
             # Inter-site distance in macrocell network topology [m]
             # Since we need to cover an area of A = 17.840.000 km^2
             # A = pi * (2.5*ISD)^2  =>  ISD = sqrt(A/pi)/(2.5)
-            # ISD = 381 km
-            intersite_distance: 381000
+            # ISD = 263 km
+            intersite_distance: 263000
             # Enable wrap around.
             wrap_around: true
             # Number of clusters in macro cell topology
@@ -83,7 +83,7 @@ imt:
             ###########################################################################
             # Maximum 2D distance between hotspot and UE [m]
             # This is the hotspot radius
-            max_dist_hotspot_ue: 600
+            max_dist_hotspot_ue: 300
             ###########################################################################
             # Minimum 2D distance between macro cell base station and hotspot [m]
             min_dist_bs_hotspot: 0
@@ -103,7 +103,7 @@ imt:
         # Urban/Suburban macro: 18m urban, 20m suburban
         # Small cell (outdoor)/Micro cell: 6m
         # Indoor (small cell): 3m
-        height: 20
+        height: 18
         # Base station noise figure [dB]
         # NOTE: From Annex 4.2 to Doc 5D/413-E, Table 4
         # Wide area: 6
@@ -335,10 +335,10 @@ single_space_station:
     es_altitude: 1200
     ###########################################################################
     # earth station lat long [deg]
-    es_lat_deg: -15.5989
+    es_lat_deg: -15.68503
     ###########################################################################
     # earth station lat long [deg]
-    es_long_deg: -56.0949
+    es_long_deg: -47.67915
     # Azimuth angle
     azimuth:
       # doesn't really matter for this case

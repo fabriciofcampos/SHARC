@@ -7,7 +7,7 @@ general:
     num_snapshots: 100000
     ###########################################################################
     # IMT link that will be simulated (DOWNLINK or UPLINK)
-    imt_link: DOWNLINK
+    imt_link: UPLINK
     ###########################################################################
     # The chosen system for sharing study
     # EESS_PASSIVE, FSS_SS, FSS_ES, FS, RAS, SINGLE_EARTH_STATION
@@ -26,9 +26,12 @@ general:
     output_dir  : campaigns/imt_macro_metsat_ss_8175MHz/output/
     ###########################################################################
     # output folder prefix
-    output_dir_prefix  : output_imt_metsat_ss_8175MHz_afr_1_cluster_dl
+    output_dir_prefix  : output_imt_metsat_ss_8175MHz_br_1_cluster_ul
 
 imt:
+    # Minimum 2D separation distance from BS to UE [m]
+    # NOTE: From 3GPP TS 38.104 v.18.6.0, based on BS class
+    imt:
     # Minimum 2D separation distance from BS to UE [m]
     # NOTE: From 3GPP TS 38.104 v.18.6.0, based on BS class
     minimum_separation_distance_bs_ue: 35
@@ -55,7 +58,7 @@ imt:
     # Defines the antenna model to be used in compatibility studies between
     # IMT and other services in adjacent band
     # Possible values: SINGLE_ELEMENT, BEAMFORMING
-    adjacent_antenna_model: BEAMFORMING
+    adjacent_antenna_model: SINGLE_ELEMENT
     # NOTE: assumed guard band ratio
     guard_band_ratio: 0.1
     # Network topology parameters.
@@ -68,8 +71,8 @@ imt:
             # Inter-site distance in macrocell network topology [m]
             # Since we need to cover an area of A = 17.840.000 km^2
             # A = pi * (2.5*ISD)^2  =>  ISD = sqrt(A/pi)/(2.5)
-            # ISD = 1243 km
-            intersite_distance: 1243000
+            # ISD = 658 km
+            intersite_distance: 658000
             # Enable wrap around.
             wrap_around: true
             # Number of clusters in macro cell topology
@@ -80,7 +83,7 @@ imt:
             ###########################################################################
             # Maximum 2D distance between hotspot and UE [m]
             # This is the hotspot radius
-            max_dist_hotspot_ue: 600
+            max_dist_hotspot_ue: 300
             ###########################################################################
             # Minimum 2D distance between macro cell base station and hotspot [m]
             min_dist_bs_hotspot: 0
@@ -100,7 +103,7 @@ imt:
         # Urban/Suburban macro: 18m urban, 20m suburban
         # Small cell (outdoor)/Micro cell: 6m
         # Indoor (small cell): 3m
-        height: 20
+        height: 18
         # Base station noise figure [dB]
         # NOTE: From Annex 4.2 to Doc 5D/413-E, Table 4
         # Wide area: 6
@@ -199,7 +202,7 @@ imt:
         # Regarding the distribution of active UE's over the cell area, this
         # parameter models the distance between UE's and BS.
         # Possible values: RAYLEIGH, UNIFORM
-        distribution_distance: UNIFORM
+        distribution_distance: RAYLEIGH
         # Regarding the distribution of active UE's over the cell area, this
         # parameter models the azimuth between UE and BS (within ±60° range).
         # Possible values: NORMAL, UNIFORM
@@ -327,14 +330,15 @@ single_space_station:
     ###########################################################################
     # earth station altitude [meters]
     # Seems like a good enough approx. since
-    # Most of Africa sits below 1000m altitude
-    es_altitude: 1000
+    # Most of Brazil's altitude is already below 900m, with Brasília at 1200m
+    # and Brazil already makes for half of South America territory
+    es_altitude: 1200
     ###########################################################################
     # earth station lat long [deg]
-    es_lat_deg: 2.07035
+    es_lat_deg: -15.68503
     ###########################################################################
     # earth station lat long [deg]
-    es_long_deg: 17.05291
+    es_long_deg: -47.67915
     # Azimuth angle
     azimuth:
       # doesn't really matter for this case
@@ -351,6 +355,7 @@ single_space_station:
     location:
       type: FIXED
       fixed:
+        # NOTE: we're setting this on the script
         lat_deg: 0
         long_deg: -14.5
   antenna:
