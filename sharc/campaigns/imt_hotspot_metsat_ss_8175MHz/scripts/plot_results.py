@@ -1,11 +1,12 @@
 import os
 from pathlib import Path
-from sharc.results import Results
+from sharc.results import Results, SampleList
 from sharc.post_processor import PostProcessor
 import plotly.graph_objects as go
 from sharc.parameters.parameters import Parameters
 
 import glob
+import numpy as np
 from sharc.antenna.antenna_s465 import AntennaS465
 from sharc.antenna.antenna_beamforming_imt import AntennaBeamformingImt, PlotAntennaPattern
 
@@ -18,98 +19,47 @@ post_processor = PostProcessor()
 # This could easily come from a config file
 post_processor\
     .add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_0m",
-        legend="ES for Sat. GOMS with Elektro-L (0m)"
+        dir_name_contains="_afr_1_cluster_dl",
+        legend="Hotspot DL 1 clusters AFR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_5km",
-        legend="ES for Sat. GOMS with Elektro-L (5km)"
+        dir_name_contains="_br_1_cluster_ul",
+        legend="Hotspot UL 1 clusters BR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_4km",
-        legend="ES for Sat. GOMS with Elektro-L (4km)"
+        dir_name_contains="_afr_7_cluster_dl",
+        legend="Hotspot DL 7 clusters AFR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_6km",
-        legend="ES for Sat. GOMS with Elektro-L (6km)"
+        dir_name_contains="_br_7_cluster_ul",
+        legend="Hotspot UL 7 clusters BR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_7km",
-        legend="ES for Sat. GOMS with Elektro-L (7km)"
+        dir_name_contains="_afr_1_cluster_ul",
+        legend="Hotspot UL 1 clusters AFR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_8km",
-        legend="ES for Sat. GOMS with Elektro-L (8km)"
+        dir_name_contains="_sa_1_cluster_dl",
+        legend="Hotspot DL 1 clusters SA"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_9km",
-        legend="ES for Sat. GOMS with Elektro-L (9km)"
+        dir_name_contains="_afr_7_cluster_ul",
+        legend="Hotspot UL 7 clusters AFR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_10km",
-        legend="ES for Sat. GOMS with Elektro-L (10km)"
+        dir_name_contains="_sa_7_cluster_dl",
+        legend="Hotspot DL 7 clusters SA"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_11km",
-        legend="ES for Sat. GOMS with Elektro-L (11km)"
+        dir_name_contains="_br_1_cluster_dl",
+        legend="Hotspot DL 1 clusters BR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_12km",
-        legend="ES for Sat. GOMS with Elektro-L (12km)"
+        dir_name_contains="_sa_1_cluster_ul",
+        legend="Hotspot UL 1 clusters SA"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_15km",
-        legend="ES for Sat. GOMS with Elektro-L (15km)"
+        dir_name_contains="_br_7_cluster_dl",
+        legend="Hotspot DL 7 clusters BR"
     ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_Q_7475MHz_20km",
-        legend="ES for Sat. GOMS with Elektro-L (20km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_0m",
-        legend="ES for Sat. P (7475 MHz, 0m)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_5km",
-        legend="ES for Sat. P (7475 MHz, 5km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_4km",
-        legend="ES for Sat. P (7475 MHz, 4km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_6km",
-        legend="ES for Sat. P (7475 MHz, 6km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_7km",
-        legend="ES for Sat. P (7475 MHz, 7km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_8km",
-        legend="ES for Sat. P (7475 MHz, 8km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_9km",
-        legend="ES for Sat. P (7475 MHz, 9km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_10km",
-        legend="ES for Sat. P (7475 MHz, 10km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_12km",
-        legend="ES for Sat. P (7475 MHz, 12km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_11km",
-        legend="ES for Sat. P (7475 MHz, 11km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_15km",
-        legend="ES for Sat. P (7475 MHz, 15km)"
-    ).add_plot_legend_pattern(
-        dir_name_contains="es_gso_sat_P_20km",
-        legend="ES for Sat. P (7475 MHz, 20km)"
-    # ).add_plot_legend_pattern(
-    #     dir_name_contains="es_gso_sat_Q_7500MHz_0m",
-    #     legend="ES for Sat. Q (7500 MHz, 0m)"
-    # ).add_plot_legend_pattern(
-    #     dir_name_contains="es_gso_sat_Q_7500MHz_1000m",
-    #     legend="ES for Sat. Q (7500 MHz, 1000m)"
-    # ).add_plot_legend_pattern(
-    #     dir_name_contains="es_gso_sat_Q_7500MHz_2000m",
-    #     legend="ES for Sat. Q (7500 MHz, 2000m)"
-    # ).add_plot_legend_pattern(
-    #     dir_name_contains="es_gso_sat_Q_7500MHz_3000m",
-    #     legend="ES for Sat. Q (7500 MHz, 3000m)"
-    # ).add_plot_legend_pattern(
-    #     dir_name_contains="es_gso_sat_Q_7500MHz_4000m",
-    #     legend="ES for Sat. Q (7500 MHz, 4000m)"
+        dir_name_contains="_sa_7_cluster_ul",
+        legend="Hotspot UL 7 clusters SA"
     )
 
 attributes_to_plot = [
-    "system_imt_antenna_gain",
-    "imt_system_path_loss",
-    "imt_system_antenna_gain",
+    # "system_imt_antenna_gain",
+    # "imt_system_path_loss",
+    # "imt_system_antenna_gain",
     "system_dl_interf_power_per_mhz",
     "system_ul_interf_power_per_mhz",
 ]
@@ -118,20 +68,38 @@ def filter_fn(result_dir: str) -> bool:
     # return "10000m" in result_dir
     return True
 
-dl_results = Results.load_many_from_dir(dl_dir, only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
-ul_results = Results.load_many_from_dir(os.path.join(campaign_base_dir, "output_ul"), only_latest=True, only_samples=attributes_to_plot, filter_fn=filter_fn)
+dl_results = Results.load_many_from_dir(
+    dl_dir, only_latest=True,
+    only_samples=attributes_to_plot,
+    filter_fn=filter_fn
+)
+ul_results = Results.load_many_from_dir(
+    os.path.join(campaign_base_dir, "output_ul"), only_latest=True,
+    only_samples=attributes_to_plot,
+    filter_fn=filter_fn
+)
 # ^: typing.List[Results]
 
 all_results = [
     *dl_results,
-    # *ul_results
+    *ul_results
 ]
+
+# transforming dBm / MHz to dB / kHz
+for result in all_results:
+    result.system_dl_interf_power_per_mhz = SampleList(
+      np.array(result.system_dl_interf_power_per_mhz) - 30 - 30
+    )
+    result.system_ul_interf_power_per_mhz = SampleList(
+      np.array(result.system_ul_interf_power_per_mhz) - 30 - 30
+    )
 
 post_processor.add_results(all_results)
 
 post_processor.add_plots(
     post_processor.generate_ccdf_plots_from_results(
-        all_results
+        all_results,
+        cutoff_percentage=0.001
     )
 )
 post_processor.add_plots(
@@ -147,7 +115,7 @@ plots_to_add_vline = [
     "system_ul_interf_power_per_mhz",
     "system_dl_interf_power_per_mhz"
 ]
-interf_protection_criteria = -154 + 30
+interf_protection_criteria = -161
 
 for prop_name in plots_to_add_vline:
     for plot_type in ["cdf", "ccdf"]:
@@ -165,27 +133,42 @@ system_dl_interf_power_plot = post_processor\
 system_ul_interf_power_plot = post_processor\
     .get_plot_by_results_attribute_name("system_ul_interf_power_per_mhz")
 aggregated_plot = None
+
 if system_ul_interf_power_plot and system_dl_interf_power_plot:
     aggregated_plot = go.Figure()
+    aggregated_plot.update_layout(
+        title=f'CDF Plot for aggregated Spectral Power Density',
+        xaxis_title="Spectral Power Density",
+        yaxis_title="CDF",
+        yaxis=dict(tickmode="array", tickvals=[0, 0.25, 0.5, 0.75, 1]),
+        xaxis=dict(tickmode="linear", dtick=5),
+        legend_title="Labels",
+        meta={"plot_type": "cdf"},
+    )
 
     for dl_r in dl_results:
         legend1 = post_processor.get_results_possible_legends(dl_r)[0]
         ul_r = None
         for maybe in ul_results:
             legend2 = post_processor.get_results_possible_legends(maybe)[0]
-            if legend1 == legend2:
+            if legend1["dir_name_contains"][:-3] == legend2["dir_name_contains"][:-3]:
                 ul_r = maybe
                 break
         if ul_r is None:
-            # raise Exception(f"Cannot aggregate {legend1} and {legend2}")
-            continue
+            raise Exception(f"Cannot aggregate {legend1} and {legend2}")
+            # continue
             
+
+        n_bs_sim = 19*3*3
+        if "_7_" in legend1["legend"]:
+            n_bs_sim = n_bs_sim * 7
+
         aggregated_results = PostProcessor.aggregate_results(
             dl_samples=dl_r.system_dl_interf_power,
             ul_samples=ul_r.system_ul_interf_power,
             ul_tdd_factor=0.25,
-            n_bs_sim=1,
-            n_bs_actual=1
+            n_bs_sim=n_bs_sim,
+            n_bs_actual=1000000
         )
         x, y = PostProcessor.cdf_from(aggregated_results)
 
@@ -196,7 +179,7 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
     # Add a protection criteria line:
     # dB to dBm (+ 30)
     # the following conversion makes the criteria more strict, so there may not be a problem
-    interf_protection_criteria = -154 + 30
+    interf_protection_criteria = -161
 
     aggregated_plot.add_vline(
         interf_protection_criteria, line_dash="dash",
@@ -239,11 +222,11 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
 
 PostProcessor.save_plots(
     os.path.join(campaign_base_dir, "output", "figs"),
-    post_processor.plots,
+    [*post_processor.plots, aggregated_plot],
 )
 
-if aggregated_plot:
-    aggregated_plot.show()
+# if aggregated_plot:
+#     aggregated_plot.show()
 
 
 plot_antenna_imt = PlotAntennaPattern("")
@@ -262,18 +245,18 @@ plot_antenna_imt = PlotAntennaPattern("")
 # for plot in plots:
 #     plot.show()
 
-full_results = ""
+# full_results = ""
 
-for result in all_results:
-    # This generates the mean, median, variance, etc
-    stats = PostProcessor.generate_statistics(
-        result=result
-    ).write_to_results_dir()
+# for result in all_results:
+#     # This generates the mean, median, variance, etc
+#     stats = PostProcessor.generate_statistics(
+#         result=result
+#     ).write_to_results_dir()
 
-    full_results += str(stats) + "\n"
-    # # do whatever you want here:
-    # if "fspl_45deg" in stats.results_output_dir:
-    #     get some stat and do something
+#     full_results += str(stats) + "\n"
+#     # # do whatever you want here:
+#     # if "fspl_45deg" in stats.results_output_dir:
+#     #     get some stat and do something
 
-with open(dl_dir + "/stats.txt", "w") as f:
-    f.write(full_results)
+# with open(dl_dir + "/stats.txt", "w") as f:
+#     f.write(full_results)

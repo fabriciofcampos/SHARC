@@ -195,7 +195,7 @@ imt:
         #                                   given distributions for angle and
         #                                   distance. In this case, these must be
         #                                   defined later.
-        distribution_type: ANGLE_AND_DISTANCE
+        distribution_type: UNIFORM
         # Regarding the distribution of active UE's over the cell area, this
         # parameter models the distance between UE's and BS.
         # Possible values: RAYLEIGH, UNIFORM
@@ -360,7 +360,7 @@ single_space_station:
       pattern: OMNI
       ###########################################################################
       # Station peak receive antenna gain [dBi]
-      gain: 28
+      gain: 36
       itu_r_s_672:
         antenna_3_dB: 20
         # this doesn't matter since 3db already covers the whole section of the globe

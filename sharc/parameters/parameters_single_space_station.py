@@ -35,10 +35,16 @@ class ParametersSingleSpaceStation(ParametersBase):
     # Antenna pattern of the sensor
     antenna: ParametersAntenna = field(default_factory=ParametersAntenna)
 
+    # Receiver polarization loss
+    # e.g. could come from polarization mismatch or depolarization
+    # check if IMT parameters don't come in values for single polarization
+    # before adding loss here
+    polarization_loss: float = 0.0
+
     # Channel model, possible values are "FSPL" (free-space path loss), "P619"
     channel_model: typing.Literal[
         "FSPL", "P619"
-    ] = "FSPL"  # Channel model to be used
+    ] = None  # Channel model to be used
 
     param_p619: ParametersP619 = field(default_factory=ParametersP619)
     # TODO: remove season from system parameter and put it as p619 parameter

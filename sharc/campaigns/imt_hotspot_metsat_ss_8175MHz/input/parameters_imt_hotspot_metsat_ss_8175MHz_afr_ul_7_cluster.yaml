@@ -352,7 +352,7 @@ single_space_station:
       pattern: OMNI
       ###########################################################################
       # Station peak receive antenna gain [dBi]
-      gain: 28
+      gain: 36
       itu_r_s_672:
         antenna_3_dB: 20
         # this doesn't matter since 3db already covers the whole section of the globe
