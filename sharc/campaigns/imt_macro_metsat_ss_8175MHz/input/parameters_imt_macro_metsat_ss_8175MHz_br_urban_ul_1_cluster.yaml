@@ -23,7 +23,7 @@ general:
     # if FALSE, then a new output directory is created
     overwrite_output: FALSE
     # output destination folder - this is relative SHARC/sharc directory
-    output_dir  : campaigns/imt_macro_metsat_ss_8175MHz/output/
+    output_dir  : campaigns/imt_macro_metsat_ss_8175MHz/output_ul/
     ###########################################################################
     # output folder prefix
     output_dir_prefix  : output_imt_metsat_ss_8175MHz_br_1_cluster_ul
