@@ -138,7 +138,7 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
     aggregated_plot = go.Figure()
     aggregated_plot.update_layout(
         title=f'CDF Plot for aggregated Spectral Power Density',
-        xaxis_title="Spectral Power Density",
+        xaxis_title="Spectral Power Density (dB/KHz)",
         yaxis_title="CDF",
         yaxis=dict(tickmode="array", tickvals=[0, 0.25, 0.5, 0.75, 1]),
         xaxis=dict(tickmode="linear", dtick=5),
@@ -160,7 +160,7 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
             
 
         n_bs_sim = 19*3*3
-        if "_7_" in legend1["legend"]:
+        if "_7_" in legend1["dir_name_contains"]:
             n_bs_sim = n_bs_sim * 7
 
         aggregated_results = PostProcessor.aggregate_results(
@@ -168,7 +168,13 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
             ul_samples=ul_r.system_ul_interf_power,
             ul_tdd_factor=0.25,
             n_bs_sim=n_bs_sim,
-            n_bs_actual=1000000
+            # n_bs_actual=19*3*3*7                                                                                                                           
+            # n_bs_actual=363300,                                                                                                                            
+            # n_bs_actual=1035900,                                                                                                                           
+            # n_bs_actual=723300,                                                                                                                            
+            # n_bs_actual=1364850,                                                                                                                           
+            n_bs_actual=4391550,                                                                                                                             
+            # n_bs_actual=1904850
         )
         x, y = PostProcessor.cdf_from(aggregated_results)
 
