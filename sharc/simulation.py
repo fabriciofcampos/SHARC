@@ -471,8 +471,6 @@ class Simulation(ABC, Observable):
 
         elif not station_1.is_imt_station():
             phi, theta = station_1.get_pointing_vector_to(station_2)
-            print("phi", phi)
-            print("theta", theta)
             beams_idx = np.zeros(len(station_2_active), dtype=int)
 
         # Calculate gains
