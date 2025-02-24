@@ -636,7 +636,11 @@ class StationFactory(object):
         return fss_space_station
 
     @staticmethod
-    def generate_single_space_station(param: ParametersSingleSpaceStation):
+    def generate_single_space_station(param: ParametersSingleSpaceStation, simplify_dist_to_y=True):
+        """
+        Creates a single satellite based on parameters.
+        In case simplify_dist_to_y == True (default) satellite will be only on y axis
+        """
         space_station = StationManager(1)
         space_station.station_type = StationType.SINGLE_SPACE_STATION
         space_station.is_space_station = True
@@ -672,10 +676,31 @@ class StationFactory(object):
             ) * 1000,
         ])
 
-        # TODO: we may need to also correct azimuth, but no matter here really
-        space_station.azimuth = param.geometry.azimuth.fixed
-        # we need to correct the elevation considering the simulator runs on 2d
-        space_station.elevation = param.geometry.elevation.fixed
+        # putting on y axis
+        if simplify_dist_to_y:
+            space_station.y = np.sqrt(space_station.x * space_station.x + space_station.y * space_station.y)
+            space_station.x = np.zeros_like(space_station.x)
+
+        if param.geometry.azimuth.type == "POINTING_AT_IMT":
+            if not simplify_dist_to_y:
+                space_station.azimuth = 180 + np.rad2deg(np.arctan2(space_station.y, space_station.x))
+            else:
+                space_station.azimuth = 270
+        elif param.geometry.azimuth.type == "FIXED":
+            space_station.azimuth = param.geometry.azimuth.fixed
+        else:
+            raise ValueError(f"Did not recognize azimuth type of {param.geometry.azimuth.type}")
+
+        if param.geometry.azimuth.type == "POINTING_AT_IMT":
+            gnd_elev = np.rad2deg(np.arctan2(
+                space_station.height,
+                np.sqrt(space_station.y * space_station.y + space_station.x * space_station.x)
+            ))
+            space_station.elevation = -gnd_elev
+        elif param.geometry.azimuth.type == "FIXED":
+            space_station.elevation = param.geometry.elevation.fixed
+        else:
+            raise ValueError(f"Did not recognize elevation type of {param.geometry.elevation.type}")
 
         space_station.active = np.array([True])
         space_station.tx_power = np.array(

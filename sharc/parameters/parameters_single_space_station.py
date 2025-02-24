@@ -60,9 +60,9 @@ class ParametersSingleSpaceStation(ParametersBase):
         es_lat_deg: float = -15.793889
 
         @dataclass
-        class FixedParam(ParametersBase):
-            __EXISTING_TYPES = ["FIXED"]
-            type: typing.Literal["FIXED"] = None
+        class PointingParam(ParametersBase):
+            __EXISTING_TYPES = ["FIXED", "POINTING_AT_IMT"]
+            type: typing.Literal["FIXED", "POINTING_AT_IMT"] = None
             fixed: float = None
 
             def validate(self, ctx):
@@ -75,17 +75,19 @@ class ParametersSingleSpaceStation(ParametersBase):
                     case "FIXED":
                         if not isinstance(self.fixed, int) and not isinstance(self.fixed, float):
                             raise ValueError(f"{ctx}.fixed should be a number")
+                    case "POINTING_AT_IMT":
+                        pass
                     case _:
                         raise NotImplementedError(
                             f"Validation for {ctx}.type = {self.type} is not implemented",
                         )
 
-        azimuth: FixedParam = field(
-            default_factory=lambda: ParametersSingleSpaceStation.SpaceStationGeometry.FixedParam(type="FIXED"),
+        azimuth: PointingParam = field(
+            default_factory=lambda: ParametersSingleSpaceStation.SpaceStationGeometry.PointingParam(type="POINTING_AT_IMT"),
         )
         # default pointing directly downwards
-        elevation: FixedParam = field(
-            default_factory=lambda: ParametersSingleSpaceStation.SpaceStationGeometry.FixedParam(type="FIXED", fixed=270),
+        elevation: PointingParam = field(
+            default_factory=lambda: ParametersSingleSpaceStation.SpaceStationGeometry.PointingParam(type="POINTING_AT_IMT"),
         )
 
         @dataclass
