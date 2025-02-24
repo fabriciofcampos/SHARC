@@ -43,7 +43,7 @@ class AntennaS672(Antenna):
 
     def calculate_gain(self, *args, **kwargs) -> np.array:
         psi = np.absolute(kwargs["off_axis_angle_vec"])
-        print("psi", psi)
+        # print("psi", psi)
 
         gain = np.zeros(len(psi))
 
