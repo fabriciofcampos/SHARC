@@ -307,7 +307,7 @@ single_space_station:
   # – ITU-R P.619
   #     Prediction procedure for the evaluation of interference between stations on
   #     the surface of the Earth at frequencies above about 0.1 GHz
-  channel_model: FSPL
+  channel_model: P619
   season: SUMMER
 
   geometry:
