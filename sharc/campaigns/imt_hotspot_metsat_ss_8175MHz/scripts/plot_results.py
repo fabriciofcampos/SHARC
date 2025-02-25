@@ -167,8 +167,6 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
             
 
         n_bs_sim = 19*3*3
-        if "_7_" in legend1["dir_name_contains"]:
-            n_bs_sim = n_bs_sim * 7
 
         aggregated_results = PostProcessor.aggregate_results(
             dl_samples=dl_r.system_dl_interf_power_per_mhz,
