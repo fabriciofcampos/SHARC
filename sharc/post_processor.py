@@ -243,9 +243,17 @@ class PostProcessor:
     }
 
     plot_legend_patterns: list = field(default_factory=list)
+    legends_generator = None
 
     plots: list[go.Figure] = field(default_factory=list)
     results: list[Results] = field(default_factory=list)
+
+    def add_plot_legend_generator(
+        self, generator
+    ) -> "PostProcessor":
+        if self.legends_generator is not None:
+            raise ValueError("Can only have one legends generator at a time")
+        self.legends_generator = generator
 
     def add_plot_legend_pattern(
         self, *, dir_name_contains: str, legend: str
@@ -258,13 +266,21 @@ class PostProcessor:
         return self
 
     def get_results_possible_legends(self, result: Results) -> list[dict]:
-        return list(
+        possible = list(
             filter(
                 lambda pl: pl["dir_name_contains"]
                 in os.path.basename(result.output_directory),
                 self.plot_legend_patterns,
             )
         )
+
+        if len(possible) == 0 and self.legends_generator is not None:
+            return [
+                {"legend": self.legends_generator(os.path.basename(result.output_directory))}
+            ]
+
+        return possible
+        
     
     def generate_cdf_plots_from_results(
         self, results: list[Results], *, n_bins=200
