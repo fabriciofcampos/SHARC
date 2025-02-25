@@ -313,7 +313,7 @@ class ReferenceAtmosphere:
         return [temperature, pressure, water_vapour_pressure, refractive_index, specific_attenuation]
 
     @staticmethod
-    def get_reference_atmosphere_p835(latitude, altitude=1000, season="summer"):
+    def get_reference_atmosphere_p835(latitude, altitude=1000, season="SUMMER"):
         """
         Returns reference atmosphere parameters based on ITU-R P835-5
 
@@ -373,7 +373,7 @@ class ReferenceAtmosphere:
 
         elif latitude <= 45.:
             # mid-latitude
-            if season == "summer":
+            if season == "SUMMER":
                 if h_km < 13.:
                     temperature = 294.9838 - 5.2159 * h_km - .07109 * h_km ** 2
                 elif h_km < 17.:
@@ -457,7 +457,7 @@ class ReferenceAtmosphere:
                 raise ValueError(error_message)
         else:
             # high latitude (>45 deg)
-            if season == "summer":
+            if season == "SUMMER":
                 if h_km < 13.:
                     temperature = 286.8374 - 4.7805 * h_km - 0.1402 * h_km ** 2
                 elif h_km < 23.:
