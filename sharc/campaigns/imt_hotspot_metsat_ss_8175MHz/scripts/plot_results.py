@@ -52,7 +52,7 @@ attributes_to_plot = [
 ]
 
 def filter_fn(result_dir: str) -> bool:
-    # return "beam" in result_dir
+    return "beam" in result_dir
     return True
 
 dl_results = Results.load_many_from_dir(
@@ -158,7 +158,7 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
         ul_r = None
         for maybe in ul_results:
             legend2 = post_processor.get_results_possible_legends(maybe)[0]
-            if legend1["dir_name_contains"][:-3] == legend2["dir_name_contains"][:-3]:
+            if legend1["legend"][:-3] == legend2["legend"][:-3]:
                 ul_r = maybe
                 break
         if ul_r is None:
