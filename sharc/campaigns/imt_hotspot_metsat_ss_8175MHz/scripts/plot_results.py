@@ -17,55 +17,42 @@ post_processor = PostProcessor()
 
 # Add a legend to results in folder that match the pattern
 # This could easily come from a config file
+import re
+def legend_gen(dir_name):
+    print(dir_name)
+    beam_deg = re.search("_([1-6])beam", dir_name)
+    if beam_deg is not None:
+        beam_deg = beam_deg.group(1)
+    else:
+        return "None"
+    long = re.search("_([1-6]0)long", dir_name)
+    if long is not None:
+        long = long.group(1)
+    else:
+        return "None"
+    link = re.search("_(dl|ul)", dir_name)
+    if link is not None:
+        link = link.group(1)
+    else:
+        return "None"
+
+    return f"Long -{long}°, beamwidth = {beam_deg}° ({link.upper()})"
+
 post_processor\
-    .add_plot_legend_pattern(
-        dir_name_contains="_afr_1_cluster_dl",
-        legend="Hotspot DL 1 clusters AFR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_br_1_cluster_ul",
-        legend="Hotspot UL 1 clusters BR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_afr_7_cluster_dl",
-        legend="Hotspot DL 7 clusters AFR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_br_7_cluster_ul",
-        legend="Hotspot UL 7 clusters BR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_afr_1_cluster_ul",
-        legend="Hotspot UL 1 clusters AFR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_sa_1_cluster_dl",
-        legend="Hotspot DL 1 clusters SA"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_afr_7_cluster_ul",
-        legend="Hotspot UL 7 clusters AFR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_sa_7_cluster_dl",
-        legend="Hotspot DL 7 clusters SA"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_br_1_cluster_dl",
-        legend="Hotspot DL 1 clusters BR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_sa_1_cluster_ul",
-        legend="Hotspot UL 1 clusters SA"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_br_7_cluster_dl",
-        legend="Hotspot DL 7 clusters BR"
-    ).add_plot_legend_pattern(
-        dir_name_contains="_sa_7_cluster_ul",
-        legend="Hotspot UL 7 clusters SA"
+    .add_plot_legend_generator(
+        legend_gen
     )
 
 attributes_to_plot = [
-    # "system_imt_antenna_gain",
-    # "imt_system_path_loss",
-    # "imt_system_antenna_gain",
+    "system_imt_antenna_gain",
+    "imt_system_path_loss",
+    "imt_system_antenna_gain",
     "system_dl_interf_power_per_mhz",
     "system_ul_interf_power_per_mhz",
 ]
 
 def filter_fn(result_dir: str) -> bool:
-    # return "10000m" in result_dir
+    # return "beam" in result_dir
     return True
 
 dl_results = Results.load_many_from_dir(
@@ -86,6 +73,8 @@ all_results = [
 ]
 
 # transforming dBm / MHz to dB / kHz
+# dBm -> dB means -30
+# /MHz -> /kHz means -30
 for result in all_results:
     result.system_dl_interf_power_per_mhz = SampleList(
       np.array(result.system_dl_interf_power_per_mhz) - 30 - 30
@@ -124,7 +113,7 @@ for prop_name in plots_to_add_vline:
         if plt:
             plt.add_vline(
                 interf_protection_criteria, line_dash="dash",
-                name="1% criteria"
+                name="0.1% criteria"
             )
 
 system_dl_interf_power_plot = post_processor\
@@ -137,10 +126,28 @@ aggregated_plot = None
 if system_ul_interf_power_plot and system_dl_interf_power_plot:
     aggregated_plot = go.Figure()
     aggregated_plot.update_layout(
-        title=f'CDF Plot for aggregated Spectral Power Density',
-        xaxis_title="Spectral Power Density (dB/KHz)",
+        title=f'CDF Plot for aggregated Spectral Power Density from Interference',
+        xaxis_title="Interference (dB/KHz)",
         yaxis_title="CDF",
         yaxis=dict(tickmode="array", tickvals=[0, 0.25, 0.5, 0.75, 1]),
+        xaxis=dict(tickmode="linear", dtick=5),
+        legend_title="Labels",
+        meta={"plot_type": "cdf"},
+    )
+    aggregated_ccdf_plot = go.Figure()
+    cutoff_percentage = 0.001
+    next_tick = 1
+    ticks_at = []
+    while next_tick > cutoff_percentage:
+        ticks_at.append(next_tick)
+        next_tick /= 10
+    ticks_at.append(cutoff_percentage)
+    ticks_at.reverse()
+    aggregated_ccdf_plot.update_layout(
+        title=f'CCDF Plot for aggregated Spectral Power Density from Interference',
+        xaxis_title="Interference (dB/KHz)",
+        yaxis_title="CCDF",
+        yaxis=dict(tickmode="array", tickvals=ticks_at, type="log", range=[np.log10(cutoff_percentage), 0]),
         xaxis=dict(tickmode="linear", dtick=5),
         legend_title="Labels",
         meta={"plot_type": "cdf"},
@@ -164,76 +171,45 @@ if system_ul_interf_power_plot and system_dl_interf_power_plot:
             n_bs_sim = n_bs_sim * 7
 
         aggregated_results = PostProcessor.aggregate_results(
-            dl_samples=dl_r.system_dl_interf_power,
-            ul_samples=ul_r.system_ul_interf_power,
+            dl_samples=dl_r.system_dl_interf_power_per_mhz,
+            ul_samples=ul_r.system_ul_interf_power_per_mhz,
             ul_tdd_factor=0.25,
             n_bs_sim=n_bs_sim,
-            # n_bs_actual=19*3*3*7                                                                                                                           
-            # n_bs_actual=363300,                                                                                                                            
-            # n_bs_actual=1035900,                                                                                                                           
-            # n_bs_actual=723300,                                                                                                                            
-            # n_bs_actual=1364850,                                                                                                                           
-            n_bs_actual=4391550,                                                                                                                             
+            # n_bs_actual=19*3*3*7
+            n_bs_actual=363300,
+            # n_bs_actual=1035900,
+            # n_bs_actual=723300,
+            # n_bs_actual=1364850,
+            # n_bs_actual=4391550,
             # n_bs_actual=1904850
         )
+        # print(aggregated_results)
+        # print("legend1['legend']",legend1["legend"])
         x, y = PostProcessor.cdf_from(aggregated_results)
 
         aggregated_plot.add_trace(
             go.Scatter(x=x, y=y, mode='lines', name=f'{legend1["legend"]}',),
         )
 
-    # Add a protection criteria line:
-    # dB to dBm (+ 30)
-    # the following conversion makes the criteria more strict, so there may not be a problem
-    interf_protection_criteria = -161
+        x, y = PostProcessor.ccdf_from(aggregated_results)
+        aggregated_ccdf_plot.add_trace(
+            go.Scatter(x=x, y=y, mode='lines', name=f'{legend1["legend"]}',),
+        )
+        
 
     aggregated_plot.add_vline(
         interf_protection_criteria, line_dash="dash",
-        name="1% criteria"
+        name="0.1% criteria"
     )
-
-# i = 0
-
-# for result in all_results:
-#     if "_10000m_" not in result.output_directory:
-#         continue
-
-#     params_file = glob.glob(result.output_directory + "/*.yaml")[0]
-#     params = Parameters()
-#     params.set_file_name(params_file)
-#     params.read_params()
-
-#     # TODO: use antenna factory here if it ever exists
-#     legend = post_processor.get_results_possible_legends(result)[0]
-#     if params.single_earth_station.antenna.pattern == "ITU-R S.465":
-#         antenna = AntennaS465(params.single_earth_station.antenna.itu_r_s_465)
-#         PostProcessor.generate_antenna_radiation_pattern_plot(antenna, antenna_legends[i]).show()
-#     if i == 0:
-#         antenna_bs = AntennaBeamformingImt(
-#             params.imt.bs.antenna.get_antenna_parameters(),
-#             0,
-#             0,
-#             # -params.imt.bs.antenna.downtilt
-#         )
-#         antenna_ue = AntennaBeamformingImt(
-#             params.imt.ue.antenna.get_antenna_parameters(),
-#             0,
-#             0
-#         )
-
-#     i += 1
-
-
-# Show a single plot:
+    aggregated_ccdf_plot.add_vline(
+        interf_protection_criteria, line_dash="dash",
+        name="0.1% criteria"
+    )
 
 PostProcessor.save_plots(
     os.path.join(campaign_base_dir, "output", "figs"),
-    [*post_processor.plots, aggregated_plot],
+    [*post_processor.plots, aggregated_plot, aggregated_ccdf_plot],
 )
-
-# if aggregated_plot:
-#     aggregated_plot.show()
-
 
 plot_antenna_imt = PlotAntennaPattern("")
 
