@@ -217,11 +217,11 @@ class PostProcessor:
         },
         "system_ul_interf_power_per_mhz": {
             "title": "[SYS] system interference power per MHz from IMT UL",
-            "x_label": "Interference Power [dBm/MHz]",
+            "x_label": "Interference Power [dBW/10MHz]",
         },
         "system_dl_interf_power_per_mhz": {
             "title": "[SYS] system interference power per MHz from IMT DL",
-            "x_label": "Interference Power [dBm/MHz]",
+            "x_label": "Interference Power [dBW/10MHz]",
         },
         "system_inr": {
             "title": "[SYS] system INR",
