@@ -2,7 +2,7 @@
 general:
     ###########################################################################
     # Number of simulation snapshots
-    num_snapshots: 500
+    num_snapshots: 2000
     ###########################################################################
     # IMT link that will be simulated (DOWNLINK or UPLINK)
     imt_link: DOWNLINK
@@ -64,10 +64,8 @@ imt:
         # Macrocell Topology parameters. Relevant when imt.topology.type == "MACROCELL"
         hotspot:
             # Inter-site distance in macrocell network topology [m]
-            # Since we need to cover an area of A = 9.870.000 km^2
-            # A = pi * (2.5*ISD)^2  =>  ISD = sqrt(A/pi)/(2.5)
-            # ISD = 263 km
-            intersite_distance: 1200
+            # 1.5 * 0.4 km
+            intersite_distance: 600
             # Enable wrap around.
             wrap_around: true
             # Number of clusters in macro cell topology
@@ -78,7 +76,7 @@ imt:
             ###########################################################################
             # Maximum 2D distance between hotspot and UE [m]
             # This is the hotspot radius
-            max_dist_hotspot_ue: 100
+            max_dist_hotspot_ue: 90
             ###########################################################################
             # Minimum 2D distance between macro cell base station and hotspot [m]
             min_dist_bs_hotspot: 0
@@ -331,7 +329,7 @@ single_earth_station:
       Hte: 6
       ###########################################################################
       # Effective height of interfered-with antenna (m)
-      Hre: 3
+      Hre: 7
       ###########################################################################
       # Latitude of transmitter
       tx_lat: 10
