@@ -85,7 +85,7 @@ imt:
         # NOTE: From Annex 4.2 to Doc 5D/413-E, Section 6
         # For wide area, .2
         # For smaller area, max. of .5
-        load_probability: .5
+        load_probability: .2
         # Conducted power per antenna element [dBm/bandwidth]
         # NOTE: From Annex 4.2 to Doc 5D/413-E, Table 10 (1.9)
         # Macro (sub)urban = 22
