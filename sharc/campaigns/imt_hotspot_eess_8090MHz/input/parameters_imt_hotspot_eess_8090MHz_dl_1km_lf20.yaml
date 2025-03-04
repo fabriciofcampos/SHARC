@@ -76,7 +76,7 @@ imt:
             ###########################################################################
             # Maximum 2D distance between hotspot and UE [m]
             # This is the hotspot radius
-            max_dist_hotspot_ue: 100
+            max_dist_hotspot_ue: 90
             ###########################################################################
             # Minimum 2D distance between macro cell base station and hotspot [m]
             min_dist_bs_hotspot: 0
